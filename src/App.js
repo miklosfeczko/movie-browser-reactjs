@@ -1,26 +1,25 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {movie} from './services/services'
+import './App.scss';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+class App extends React.Component {
+  state = {
+    MOVIES: []
+  }
+
+  movie = async() => {
+    const MOVIE_RESULTS = await movie();
+    this.setState({ MOVIES: MOVIE_RESULTS.results });
+    console.log(this.state.MOVIES);
+  }
+
+  render() {
+    return (
+      <div>
+        <button onClick={this.movie}>Click Me!</button>
+      </div>
   );
+}
 }
 
 export default App;
