@@ -12,3 +12,10 @@ export const toprated_movie = async(e) => {
     const MOVIE_RESULTS = await fetch(`https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language=en-US&page=1`);
     return MOVIE_RESULTS.json();
 }
+
+// fetching upcoming movies
+export const upcoming_movie = async(e) => {
+    const MOVIE_RESULTS = await fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}&language=en-US&page=1`);
+    return MOVIE_RESULTS.json();
+}
+
