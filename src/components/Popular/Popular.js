@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
 import {popular_movie} from '../../services/services'
 
+import './Popular.scss'
+
 class Popular extends Component {
 
     state = {
         MOVIES: []
     }
     
-    popular_movie = async() => {
+    componentDidMount = async() => {
         const MOVIE_RESULTS = await popular_movie();
         this.setState({ MOVIES: MOVIE_RESULTS.results });
         console.log(this.state.MOVIES);
@@ -15,8 +17,15 @@ class Popular extends Component {
 
     render() {
         return (
-            <div>
-                 <button onClick={this.popular_movie}>Click Me!</button>
+            <div className="main__container">
+                {this.state.MOVIES && this.state.MOVIES.map((MOVIE) => {
+
+                    return(
+                        <div>
+                            {MOVIE.title}
+                        </div>
+                    )
+                })}
             </div>
         )
     }

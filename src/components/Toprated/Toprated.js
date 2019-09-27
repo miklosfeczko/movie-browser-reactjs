@@ -7,7 +7,7 @@ class Toprated extends Component {
         MOVIES: []
     }
     
-    toprated_movie = async() => {
+    componentDidMount = async() => {
         const MOVIE_RESULTS = await toprated_movie();
         this.setState({ MOVIES: MOVIE_RESULTS.results });
         console.log(this.state.MOVIES);
@@ -15,9 +15,16 @@ class Toprated extends Component {
 
     render() {
         return (
-            <div>
-                 <button onClick={this.toprated_movie}>Click Me!</button>
-            </div>
+            <div className="main__container">
+            {this.state.MOVIES && this.state.MOVIES.map((MOVIE) => {
+
+                return(
+                    <div>
+                        {MOVIE.title}
+                    </div>
+                )
+            })}
+        </div>
         )
     }
 }

@@ -7,7 +7,7 @@ class Upcoming extends Component {
         MOVIES: []
     }
     
-    upcoming_movie = async() => {
+   componentDidMount = async() => {
         const MOVIE_RESULTS = await upcoming_movie();
         this.setState({ MOVIES: MOVIE_RESULTS.results });
         console.log(this.state.MOVIES);
@@ -15,8 +15,15 @@ class Upcoming extends Component {
 
     render() {
         return (
-            <div>
-                 <button onClick={this.upcoming_movie}>Click Me!</button>
+            <div className="main__container">
+                {this.state.MOVIES && this.state.MOVIES.map((MOVIE) => {
+
+                    return(
+                        <div>
+                            {MOVIE.title}
+                        </div>
+                    )
+                })}
             </div>
         )
     }
