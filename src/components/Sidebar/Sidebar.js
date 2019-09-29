@@ -29,11 +29,12 @@ class Sidebar extends Component {
                 }}>Upcoming</Link>
 
                 {this.state.GENRES && this.state.GENRES.map((GENRE) => {
-
+                    console.log(GENRE.id)
                 return(
                     <div>
                         <Link to={{
-                        pathname: `/Genres/${GENRE.name}`
+                        pathname: `/Genres/${GENRE.name}`,
+                        state: { genre: `${GENRE.id}` }
                         }}>
                             {GENRE.name}
                         </Link>

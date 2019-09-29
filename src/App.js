@@ -9,6 +9,7 @@ import Search from './components/Search/Search'
 import Popular from './components/Popular/Popular'
 import Toprated from './components/Toprated/Toprated'
 import Upcoming from './components/Upcoming/Upcoming'
+import Genres from './components/Genres/Genres'
 
 import './App.scss';
 
@@ -25,6 +26,7 @@ class App extends React.Component {
             <Route exact path="/Toprated" component={Toprated} />
             <Route exact path="/Upcoming" component={Upcoming} /> 
             <Route exact path="/Search/:name" component={Search} />
+            <Route exact path="/Genres/:name" component={Genres} />
           </Switch>
         </Router>
       
