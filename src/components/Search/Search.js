@@ -23,15 +23,9 @@ class Search extends Component {
     }
 
 
-    componentDidUpdate(prevProps, prevState) {
-      console.log(prevState.name)
-      console.log(prevProps.match.params.name)
-      console.log(this.state.name)
-      console.log(this.props.match.params.name)
+    componentDidUpdate(prevProps) {
         if (prevProps.match.params.name !== this.props.match.params.name) {
           this.fetchMovies()
-        } else if (prevState.name === this.props.match.params.name) {
-          return
         } else return
     }
     

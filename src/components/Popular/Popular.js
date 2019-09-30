@@ -21,7 +21,7 @@ class Popular extends Component {
                 {this.state.MOVIES && this.state.MOVIES.map((MOVIE) => {
 
                     return(
-                        <div>
+                        <div key={MOVIE.id}>
                             {MOVIE.title}
                         </div>
                     )
