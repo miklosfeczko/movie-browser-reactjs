@@ -30,7 +30,7 @@ class Search extends Component {
     }
     
     render() {
-               
+        
         return (
             <div className="main__container">
              {this.state.MOVIES && this.state.MOVIES.map((MOVIE) => {

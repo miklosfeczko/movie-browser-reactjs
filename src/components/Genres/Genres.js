@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
 
 class Genres extends Component {
-
     state = {
-        id: this.props.location.state.id,
-        name: this.props.location.state.name,
         MOVIES: []
     }
     
@@ -13,13 +10,6 @@ class Genres extends Component {
         const DATA = await MOVIE_RESULTS.json();
         this.setState({ MOVIES: DATA.results });
     }
-
-    /*fetchMovies() { 
-        fetch(`https://api.themoviedb.org/3/discover/movie?api_key=e8146f65b965e0a1cb0600c774f8a2a6&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${this.state.id}`)
-          .then(response => response.json())
-          .then(DATA => this.setState({ MOVIES: DATA.results }))
-        //this.setState({ MOVIES: DATA.results })    
-    }*/
 
     fetchMovies = async () => {
         const MOVIE_RESULTS = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=e8146f65b965e0a1cb0600c774f8a2a6&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${this.props.location.state.id}`);

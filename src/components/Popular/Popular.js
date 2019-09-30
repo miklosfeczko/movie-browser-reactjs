@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
+import {Link} from 'react-router-dom'
 import {popular_movie} from '../../services/services'
+
 
 import './Popular.scss'
 
@@ -22,7 +24,12 @@ class Popular extends Component {
 
                     return(
                         <div key={MOVIE.id}>
-                            {MOVIE.title}
+                            <Link to={{
+                                pathname: `/Movie/${MOVIE.id}`,
+                                state: { movie: MOVIE.id }
+                            }}>
+                                {MOVIE.title}
+                            </Link>
                         </div>
                     )
                 })}
