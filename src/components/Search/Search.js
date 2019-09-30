@@ -4,13 +4,12 @@ class Search extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          name: this.props.location.state.text,
           MOVIES: []
         }
     }
 
     componentDidMount = async () => {
-        const MOVIE_RESULTS = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=e8146f65b965e0a1cb0600c774f8a2a6&language=en-US&query=${this.state.name}&page=1&include_adult=false`);
+        const MOVIE_RESULTS = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=e8146f65b965e0a1cb0600c774f8a2a6&language=en-US&query=${this.props.match.params.name}&page=1&include_adult=false`);
         const DATA = await MOVIE_RESULTS.json();
         this.setState({ MOVIES: DATA.results });
     }
