@@ -1,30 +1,60 @@
 import React, { Component } from 'react'
 
+
+let count = 1;
+
 class Genres extends Component {
     state = {
         MOVIES: []
     }
     
     componentDidMount = async () => {
-        const MOVIE_RESULTS = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=e8146f65b965e0a1cb0600c774f8a2a6&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${this.props.location.state.id}`);
+        const MOVIE_RESULTS = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=e8146f65b965e0a1cb0600c774f8a2a6&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${this.props.match.params.name}`);
         const DATA = await MOVIE_RESULTS.json();
-        this.setState({ MOVIES: DATA.results });
+        this.setState({ 
+            MOVIES: DATA.results,
+            page: 1
+         });
+        console.log(this.state.page)
+        console.log(count)
     }
 
-    fetchMovies = async () => {
-        const MOVIE_RESULTS = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=e8146f65b965e0a1cb0600c774f8a2a6&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${this.props.location.state.id}`);
-        const DATA = await MOVIE_RESULTS.json();
-        this.setState({ MOVIES: DATA.results });
+    fetchMovies() {
+        fetch(`https://api.themoviedb.org/3/discover/movie?api_key=e8146f65b965e0a1cb0600c774f8a2a6&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${this.props.match.params.name}`)
+        .then(response => response.json())
+        .then(DATA => this.setState({ MOVIES: DATA.results }))
     }
 
    componentDidUpdate(prevProps) {
           if (prevProps.match.params.name !== this.props.match.params.name) {
             this.fetchMovies()
-          } else {
-              return
-          }
-      }
+          } else return
+    }
 
+    nextPage = async () => {
+        console.log(this.state.page)
+        this.setState({
+            MOVIES: []
+         })
+        count = count+1;
+        fetch(`https://api.themoviedb.org/3/discover/movie?api_key=e8146f65b965e0a1cb0600c774f8a2a6&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${count}&with_genres=${this.props.match.params.name}`)
+        .then(response => response.json())
+        .then(DATA => this.setState({ MOVIES: DATA.results }))
+        console.log(this.state.page)
+        console.log(count)
+    }
+
+    backPage = async () => {
+        if (count > 1) {
+        this.setState({ MOVIES: []})
+        count = count-1;
+        fetch(`https://api.themoviedb.org/3/discover/movie?api_key=e8146f65b965e0a1cb0600c774f8a2a6&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${count}&with_genres=${this.props.match.params.name}`)
+        .then(response => response.json())
+        .then(DATA => this.setState({ MOVIES: DATA.results }))
+        } else return
+        console.log(this.state.page)
+    }
+ 
     render() {
         return (
             <div className="main__container">
@@ -36,6 +66,8 @@ class Genres extends Component {
                         </div>
                     )
                 })}
+                <button onClick={this.backPage}>Back</button>
+                <button onClick={this.nextPage}>Next</button>
             </div>
         )
     }

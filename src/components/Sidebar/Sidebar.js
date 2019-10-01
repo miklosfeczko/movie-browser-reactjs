@@ -32,7 +32,7 @@ class Sidebar extends Component {
                 return(
                     <div key={GENRE.id}>
                         <Link to={{
-                        pathname: `/Genres/${GENRE.name}`,
+                        pathname: `/Genres/${GENRE.id}`,
                         state: { 
                             id: `${GENRE.id}`,
                             name: `${GENRE.name}`

@@ -14,7 +14,6 @@ class Popular extends Component {
     componentDidMount = async() => {
         const MOVIE_RESULTS = await popular_movie();
         this.setState({ MOVIES: MOVIE_RESULTS.results });
-        console.log(this.state.MOVIES);
     }
 
     render() {
