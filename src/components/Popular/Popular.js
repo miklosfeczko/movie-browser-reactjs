@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import {Link} from 'react-router-dom'
 import {popular_movie} from '../../services/services'
 
-
 import './Popular.scss'
 
 let count = 1;
@@ -10,16 +9,20 @@ let count = 1;
 class Popular extends Component {
 
     state = {
-        MOVIES: []
+        MOVIES: [],
+        total: ''
     }
     
     componentDidMount = async() => {
         const MOVIE_RESULTS = await popular_movie();
-        this.setState({ MOVIES: MOVIE_RESULTS.results });
+        this.setState({ 
+            MOVIES: MOVIE_RESULTS.results,
+            total: MOVIE_RESULTS.total_pages
+        }); 
     }
 
     nextPage = async () => {
-        console.log(this.state.page)
+        if (count < this.state.total) {
         this.setState({
             MOVIES: []
          })
@@ -27,8 +30,7 @@ class Popular extends Component {
         fetch(`https://api.themoviedb.org/3/movie/popular?api_key=e8146f65b965e0a1cb0600c774f8a2a6&language=en-US&page=${count}`)
         .then(response => response.json())
         .then(DATA => this.setState({ MOVIES: DATA.results }))
-        console.log(this.state.page)
-        console.log(count)
+        } else return 
     }
 
     backPage = async () => {
@@ -39,7 +41,6 @@ class Popular extends Component {
         .then(response => response.json())
         .then(DATA => this.setState({ MOVIES: DATA.results }))
         } else return
-        console.log(this.state.page)
     }
 
     render() {

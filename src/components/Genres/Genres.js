@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 
-
 let count = 1;
 
 class Genres extends Component {
     state = {
-        MOVIES: []
+        MOVIES: [],
+        total: ''
     }
     
     componentDidMount = async () => {
@@ -13,10 +13,8 @@ class Genres extends Component {
         const DATA = await MOVIE_RESULTS.json();
         this.setState({ 
             MOVIES: DATA.results,
-            page: 1
+            total: DATA.total_pages
          });
-        console.log(this.state.page)
-        console.log(count)
     }
 
     fetchMovies() {
@@ -32,7 +30,7 @@ class Genres extends Component {
     }
 
     nextPage = async () => {
-        console.log(this.state.page)
+        if (count < this.state.total) {
         this.setState({
             MOVIES: []
          })
@@ -40,7 +38,7 @@ class Genres extends Component {
         fetch(`https://api.themoviedb.org/3/discover/movie?api_key=e8146f65b965e0a1cb0600c774f8a2a6&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${count}&with_genres=${this.props.match.params.name}`)
         .then(response => response.json())
         .then(DATA => this.setState({ MOVIES: DATA.results }))
-        console.log(this.state.page)
+        } else return
         console.log(count)
     }
 
@@ -52,7 +50,6 @@ class Genres extends Component {
         .then(response => response.json())
         .then(DATA => this.setState({ MOVIES: DATA.results }))
         } else return
-        console.log(this.state.page)
     }
  
     render() {

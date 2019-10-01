@@ -6,17 +6,20 @@ let count = 1;
 class Upcoming extends Component {
 
     state = {
-        MOVIES: []
+        MOVIES: [],
+        total: ''
     }
     
    componentDidMount = async() => {
         const MOVIE_RESULTS = await upcoming_movie();
-        this.setState({ MOVIES: MOVIE_RESULTS.results });
-        console.log(this.state.MOVIES);
+        this.setState({ 
+            MOVIES: MOVIE_RESULTS.results,
+            total: MOVIE_RESULTS.total_pages
+        });
     }
 
     nextPage = async () => {
-        console.log(this.state.page)
+        if (count < this.state.total) {
         this.setState({
             MOVIES: []
          })
@@ -24,8 +27,7 @@ class Upcoming extends Component {
         fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=e8146f65b965e0a1cb0600c774f8a2a6&language=en-US&page=${count}`)
         .then(response => response.json())
         .then(DATA => this.setState({ MOVIES: DATA.results }))
-        console.log(this.state.page)
-        console.log(count)
+        }
     }
 
     backPage = async () => {
@@ -36,7 +38,6 @@ class Upcoming extends Component {
         .then(response => response.json())
         .then(DATA => this.setState({ MOVIES: DATA.results }))
         } else return
-        console.log(this.state.page)
     }
 
     render() {

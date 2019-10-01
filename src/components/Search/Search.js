@@ -6,14 +6,18 @@ class Search extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          MOVIES: []
+          MOVIES: [],
+          total: ''
         }
     }
 
     componentDidMount = async () => {
         const MOVIE_RESULTS = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=e8146f65b965e0a1cb0600c774f8a2a6&language=en-US&query=${this.props.match.params.name}&page=1&include_adult=false`);
         const DATA = await MOVIE_RESULTS.json();
-        this.setState({ MOVIES: DATA.results });
+        this.setState({ 
+            MOVIES: DATA.results,
+            total: DATA.total_pages
+         });
     }
     
     fetchMovies() { 
@@ -31,7 +35,7 @@ class Search extends Component {
     }
 
     nextPage = async () => {
-        console.log(this.state.page)
+        if (count < this.state.total) {
         this.setState({
             MOVIES: []
          })
@@ -39,8 +43,7 @@ class Search extends Component {
         fetch(`https://api.themoviedb.org/3/search/movie?api_key=e8146f65b965e0a1cb0600c774f8a2a6&language=en-US&query=${this.props.match.params.name}&page=${count}&include_adult=false`)
         .then(response => response.json())
         .then(DATA => this.setState({ MOVIES: DATA.results }))
-        console.log(this.state.page)
-        console.log(count)
+        }
     }
 
     backPage = async () => {
@@ -51,7 +54,6 @@ class Search extends Component {
         .then(response => response.json())
         .then(DATA => this.setState({ MOVIES: DATA.results }))
         } else return
-        console.log(this.state.page)
     }
     
     render() {
