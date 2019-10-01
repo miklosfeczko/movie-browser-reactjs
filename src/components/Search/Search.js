@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+let count = 1;
+
 class Search extends Component {
     constructor(props) {
         super(props);
@@ -27,6 +29,30 @@ class Search extends Component {
           this.fetchMovies()
         } else return
     }
+
+    nextPage = async () => {
+        console.log(this.state.page)
+        this.setState({
+            MOVIES: []
+         })
+        count = count+1;
+        fetch(`https://api.themoviedb.org/3/search/movie?api_key=e8146f65b965e0a1cb0600c774f8a2a6&language=en-US&query=${this.props.match.params.name}&page=${count}&include_adult=false`)
+        .then(response => response.json())
+        .then(DATA => this.setState({ MOVIES: DATA.results }))
+        console.log(this.state.page)
+        console.log(count)
+    }
+
+    backPage = async () => {
+        if (count > 1) {
+        this.setState({ MOVIES: []})
+        count = count-1;
+        fetch(`https://api.themoviedb.org/3/search/movie?api_key=e8146f65b965e0a1cb0600c774f8a2a6&language=en-US&query=${this.props.match.params.name}&page=${count}&include_adult=false`)
+        .then(response => response.json())
+        .then(DATA => this.setState({ MOVIES: DATA.results }))
+        } else return
+        console.log(this.state.page)
+    }
     
     render() {
         
@@ -39,6 +65,8 @@ class Search extends Component {
                     </div>
                 )
                 })}
+             <button onClick={this.backPage}>Back</button>
+             <button onClick={this.nextPage}>Next</button>
             </div>
         )
     }
