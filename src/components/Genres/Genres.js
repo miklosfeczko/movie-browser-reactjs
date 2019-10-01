@@ -39,7 +39,6 @@ class Genres extends Component {
         .then(response => response.json())
         .then(DATA => this.setState({ MOVIES: DATA.results }))
         } else return
-        console.log(count)
     }
 
     backPage = async () => {

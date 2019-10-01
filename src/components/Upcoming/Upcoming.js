@@ -27,7 +27,7 @@ class Upcoming extends Component {
         fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=e8146f65b965e0a1cb0600c774f8a2a6&language=en-US&page=${count}`)
         .then(response => response.json())
         .then(DATA => this.setState({ MOVIES: DATA.results }))
-        }
+        } else return
     }
 
     backPage = async () => {

@@ -18,13 +18,18 @@ class Search extends Component {
             MOVIES: DATA.results,
             total: DATA.total_pages
          });
+         console.log(this.state.total)
+         console.log(this.state.MOVIES)
+         console.log(count)
     }
     
     fetchMovies() { 
         fetch(`https://api.themoviedb.org/3/search/movie?api_key=e8146f65b965e0a1cb0600c774f8a2a6&language=en-US&query=${this.props.match.params.name}&page=1&include_adult=false`)
           .then(response => response.json())
-          .then(DATA => this.setState({ MOVIES: DATA.results }))
-        //this.setState({ MOVIES: DATA.results })    
+          .then(DATA => this.setState({ 
+                                        MOVIES: DATA.results,
+                                        total: DATA.total_pages
+                                    }))
     }
 
 
@@ -43,7 +48,7 @@ class Search extends Component {
         fetch(`https://api.themoviedb.org/3/search/movie?api_key=e8146f65b965e0a1cb0600c774f8a2a6&language=en-US&query=${this.props.match.params.name}&page=${count}&include_adult=false`)
         .then(response => response.json())
         .then(DATA => this.setState({ MOVIES: DATA.results }))
-        }
+        } else return
     }
 
     backPage = async () => {
