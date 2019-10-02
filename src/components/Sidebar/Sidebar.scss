@@ -1,14 +1,47 @@
 .sidebar__main {
-    width: 13vw;
+    margin-top: 2rem;
+    width: 12.5vw;
     height: 100%;
-    background: #1e1f26;
+    background: white;
     display: flex;
     flex-direction: column;
     align-items: center;
     position: fixed;
     left: 0;
     top: 0;
-    overflow-y: scroll;
+    overflow-y: hidden;
     overflow-x: hidden;
     color: white;
+    border-right: 1px solid rgb(226, 226, 226);
 }
+
+@media only screen and (min-width: 2100px) {
+    .sidebar__main {
+        width: 12vw;
+    }
+}
+
+@media only screen and (min-width: 2300px) {
+    .sidebar__main {
+        width: 11vw;
+    }
+}
+
+@media only screen and (min-width: 2500px) {
+    .sidebar__main {
+        width: 10vw;
+    }
+}
+
+@media only screen and (min-width: 2700px) {
+    .sidebar__main {
+        width: 9vw;
+    }
+}
+
+@media only screen and (min-width: 3000px) {
+    .sidebar__main {
+        width: 8vw;
+    }
+}
+

@@ -1,3 +1,154 @@
 .main__container {
-    margin-left: 13vw;
+    margin-left: 15vw;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;    // space-around
+}
+
+.poster__item {
+    width: 16rem;
+    max-width: 100%;
+    margin: 2rem 1.8rem;
+    overflow: hidden;
+    img {
+        width: 100%;
+        height: auto;
+        border-radius: 9px;
+    }
+    .poster__title {
+        text-align: center;
+    }
+}
+
+.bot {
+    margin: auto;
+    text-align: right;
+    padding-bottom: 3rem;
+    margin-right: 2vw;
+    button {
+        color: white;
+        background-color: rgb(51, 51, 51);
+        border: 1px solid transparent;
+        margin-left: 15vw;
+        display: inline-block;
+        justify-content: space-around;
+        padding: 0.6rem 3rem;
+        border-radius: 5rem;
+        line-height: 1;
+        font-weight: 500;
+        font-size: 1rem;
+        width: auto;
+        transition: all 0.1s linear;
+        -moz-transition: all 0.1s linear;
+	    -webkit-transition: all 0.1s linear;
+	    -o-transition: all 0.1s linear;
+	    -ms-transition: all 0.1s linear;
+        &:hover {
+            color: black;
+            background-color: white;
+            border: 1px solid black;
+            transition: all 0.1s linear;
+            transition: all 0.1s linear;
+            -moz-transition: all 0.1s linear;
+	        -webkit-transition: all 0.1s linear;
+	        -o-transition: all 0.1s linear;
+	        -ms-transition: all 0.1s linear;
+        }
+        &:focus {
+            outline: 0;
+        }
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .bot 
+        button {
+            padding: 0.4rem 1.7rem;
+    }
+}
+
+@media only screen and (min-width: 2100px) {
+    .main__container {
+        margin-left: 14vw;
+    }
+
+    .poster__item {
+        margin: 2rem 1.2rem;
+    }
+
+    .bot button {
+        margin-left: 14vw;
+    }
+}
+
+@media only screen and (min-width: 2300px) {
+    .main__container {
+        margin-left: 13vw;
+    }
+
+    .poster__item {
+        margin: 2rem 1rem;
+    }
+
+    .bot button {
+        margin-left: 13vw;
+    }
+}
+
+@media only screen and (min-width: 2500px) {
+    .main__container {
+        margin-left: 12vw;
+    }
+
+    .poster__item {
+        margin: 2rem 0.5rem;
+    }
+
+    .bot button {
+        margin-left: 12vw;
+    }
+}
+
+@media only screen and (min-width: 2700px) {
+    .main__container {
+        margin-left: 11vw;
+    }
+
+    .poster__item {
+        margin: 2rem 0.6rem;
+    }
+
+    .bot button {
+        margin-left: 11vw;
+    }
+}
+
+@media only screen and (min-width: 3000px) {
+    .main__container {
+        margin-left: 10.5vw;
+        margin-top: 10vh;
+    }
+
+    .poster__item {
+        margin-top: 2rem;
+        margin-right: 2.1rem;
+        margin-left: 0;
+        width: 19rem;
+        img {
+        width: 100%;
+        height: auto;
+        border-radius: 9px;
+    }
+    }
+
+    .bot {
+        margin-right: 0vw;
+        button {
+            margin-left: 9vw;
+        }
+    .right {
+        margin-right: 1vw;
+    }
+    } 
+    
 }

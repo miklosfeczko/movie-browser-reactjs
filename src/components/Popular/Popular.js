@@ -18,7 +18,8 @@ class Popular extends Component {
         this.setState({ 
             MOVIES: MOVIE_RESULTS.results,
             total: MOVIE_RESULTS.total_pages
-        }); 
+        });
+        console.log(this.state.MOVIES) 
     }
 
     nextPage = async () => {
@@ -45,6 +46,7 @@ class Popular extends Component {
 
     render() {
         return (
+            <div className="bot">
             <div className="main__container">
                 {this.state.MOVIES && this.state.MOVIES.map((MOVIE) => {
 
@@ -54,13 +56,22 @@ class Popular extends Component {
                                 pathname: `/Movie/${MOVIE.id}`,
                                 state: { movie: MOVIE.id }
                             }}>
-                                {MOVIE.title}
+                                <div className="poster__item">
+                                <img
+                                src={    
+                                    `https://image.tmdb.org/t/p/original${MOVIE.poster_path}`                                  
+                                } 
+                                />
+                                <p className="poster__title">{MOVIE.title}</p>
+                                </div>
+                                
                             </Link>
                         </div>
                     )
                 })}
-             <button onClick={this.backPage}>Back</button>
-             <button onClick={this.nextPage}>Next</button>
+            </div>
+             <button style={{float: 'left'}} className="left" onClick={this.backPage}>Back</button>
+             <button className="right" onClick={this.nextPage}>Next</button>      
             </div>
         )
     }
