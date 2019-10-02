@@ -58,6 +58,7 @@ class Popular extends Component {
                             }}>
                                 <div className="poster__item">
                                 <img
+                                alt={MOVIE.title}
                                 src={    
                                     `https://image.tmdb.org/t/p/original${MOVIE.poster_path}`                                  
                                 } 
