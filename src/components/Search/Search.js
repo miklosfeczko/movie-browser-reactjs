@@ -18,9 +18,6 @@ class Search extends Component {
             MOVIES: DATA.results,
             total: DATA.total_pages
          });
-         console.log(this.state.total)
-         console.log(this.state.MOVIES)
-         console.log(count)
     }
     
     fetchMovies() { 

@@ -33,8 +33,7 @@ class Movie extends Component {
                     return(
                         <div key={CAST.cast_id}>
                           <Link to={{
-                              pathname: `/Person/${CAST.id}`,
-                              state: { id: CAST.id }
+                              pathname: `/Person/${CAST.id}`      
                           }}>
                             {CAST.character}
                           </Link>

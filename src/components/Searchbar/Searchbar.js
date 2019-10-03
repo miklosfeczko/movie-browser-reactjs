@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import {Link} from 'react-router-dom'
 
+import './Searchbar.scss'
+
 class Searchbar extends Component {
 
     state = {
@@ -15,25 +17,27 @@ class Searchbar extends Component {
     render() {
         
         return (
-            <div className="main__container">  
-            <form>   
+           
+            <div className="lol">
+            <form className="right">   
                   <input 
+                    autoComplete="off"
                     type="text" 
                     className="form-control" 
                     onChange={e => this.onSearchChange(e.target.value)} 
                     value={this.state.term} 
                     name="search" 
-                    placeholder="Type here to search"
+                    placeholder="Search for a movie"
                     spellCheck="false"
                     />
                 <Link to={{
-                    pathname: `/Search/${this.state.term}`,
-                    state: { text: this.state.term }
+                    pathname: `/Search/${this.state.term}`
                 }}>
-                    <button>Submit</button>
+                    <button>S</button>
                 </Link>
             </form> 
             </div>
+            
         )
     }
 }

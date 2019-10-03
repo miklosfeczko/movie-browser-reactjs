@@ -51,10 +51,12 @@ class Popular extends Component {
                 {this.state.MOVIES && this.state.MOVIES.map((MOVIE) => {
 
                     return(
-                        <div key={MOVIE.id}>
-                            <Link to={{
-                                pathname: `/Movie/${MOVIE.id}`,
-                                state: { movie: MOVIE.id }
+                        
+                            <Link 
+                            style={{ textDecoration: 'none'}}
+                            key={MOVIE.id} 
+                            to={{
+                                pathname: `/Movie/${MOVIE.id}`                      
                             }}>
                                 <div className="poster__item">
                                 <img
@@ -67,7 +69,7 @@ class Popular extends Component {
                                 </div>
                                 
                             </Link>
-                        </div>
+                       
                     )
                 })}
             </div>

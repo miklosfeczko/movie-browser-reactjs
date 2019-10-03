@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
+import {Link} from 'react-router-dom'
 import {upcoming_movie} from '../../services/services'
+
+import '../Popular/Popular'
 
 let count = 1;
 
@@ -42,17 +45,34 @@ class Upcoming extends Component {
 
     render() {
         return (
-            <div className="main__container">
+            <div className="bot">
+                <div className="main__container">
                 {this.state.MOVIES && this.state.MOVIES.map((MOVIE) => {
 
                     return(
-                        <div key={MOVIE.id}>
-                            {MOVIE.title}
-                        </div>
+            
+                            <Link
+                            style={{textDecoration: 'none'}} 
+                            key={MOVIE.id} 
+                            to={{
+                                pathname: `/Movie/${MOVIE.id}`                      
+                            }}>
+                            <div className="poster__item">
+                                <img
+                                alt={MOVIE.title}
+                                src={    
+                                    `https://image.tmdb.org/t/p/original${MOVIE.poster_path}`                                  
+                                } 
+                                />
+                                <p className="poster__title">{MOVIE.title}</p>
+                            </div>
+                            </Link>
+                       
                     )
                 })}
-             <button onClick={this.backPage}>Back</button>
-             <button onClick={this.nextPage}>Next</button>
+                 </div>
+                <button style={{float: 'left'}} className="left" onClick={this.backPage}>Back</button>
+                <button className="right" onClick={this.nextPage}>Next</button>      
             </div>
         )
     }

@@ -13,7 +13,6 @@ import Genres from './components/Genres/Genres'
 import Movie from './components/Movie/Movie'
 import Person from './components/Person/Person'
 
-import './App.scss';
 
 class App extends React.Component {
 

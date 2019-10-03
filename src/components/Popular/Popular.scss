@@ -19,7 +19,10 @@
         border-radius: 9px;
     }
     .poster__title {
+        padding-top: 1rem;
         text-align: center;
+        color: #546e7a;
+        font-size: 85%;
     }
 }
 
@@ -30,7 +33,7 @@
     margin-right: 0vw;
     button {
         color: white;
-        background-color: rgb(51, 51, 51);
+        background-color: #37474f;
         border: 1px solid transparent;
         margin-left: 13.5vw;
         display: inline-block;
@@ -47,9 +50,9 @@
 	    -o-transition: all 0.1s linear;
 	    -ms-transition: all 0.1s linear;
         &:hover {
-            color: black;
+            color: #37474f;
             background-color: white;
-            border: 1px solid black;
+            border: 1px solid #37474f;
             transition: all 0.1s linear;
             transition: all 0.1s linear;
             -moz-transition: all 0.1s linear;

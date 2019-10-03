@@ -17,30 +17,39 @@ class Sidebar extends Component {
 
     render() {
         return (
-            <div className="sidebar__main">
-                <Link to={{
-                     pathname: `/Popular/`
-                }}>Popular</Link>
-                <Link to={{
-                     pathname: `/Toprated/`
-                }}>Top Rated</Link>
-                <Link to={{
-                     pathname: `/Upcoming/`
-                }}>Upcoming</Link>
-
+            <div className="sidebar__main" id="sidebarId">   
+                <p>discover</p>   
+                    <Link
+                    className="list" 
+                    style={{textDecoration: 'none'}}
+                    to={{
+                        pathname: `/Popular/`
+                    }}>Popular</Link>
+                    <Link
+                    className="list"
+                    style={{textDecoration: 'none'}} 
+                    to={{
+                        pathname: `/Toprated/`
+                    }}>Top Rated</Link>
+                    <Link
+                    className="list"
+                    style={{textDecoration: 'none'}} 
+                    to={{
+                        pathname: `/Upcoming/`
+                    }}>Upcoming</Link>
+                <p>genres</p>
                 {this.state.GENRES && this.state.GENRES.map((GENRE) => {
                 return(
-                    <div key={GENRE.id}>
-                        <Link to={{
-                        pathname: `/Genres/${GENRE.id}`,
-                        state: { 
-                            id: `${GENRE.id}`,
-                            name: `${GENRE.name}`
-                         }
+                        <Link
+                        key={GENRE.id}
+                        style={{textDecoration: 'none', color: '#9e9e9e'}} 
+                        to={{
+                        pathname: `/Genres/${GENRE.id}`
                         }}>
+                            <div className="list">
                             {GENRE.name}
+                            </div>
                         </Link>
-                    </div>
                 )
                 })}
             </div>

@@ -5,14 +5,43 @@
     background: white;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: left;
     position: fixed;
     left: 0;
     top: 0;
-    overflow-y: hidden;
-    overflow-x: hidden;
+    overflow-y: scroll;
+    overflow-x: scroll;
     color: white;
     border-right: 1px solid rgb(226, 226, 226);
+    p {
+        text-transform: uppercase;
+        color: #37474f;
+        font-size: 70%;
+        font-weight: bold;
+        margin-left: 1.8rem;
+        margin-top: 1.8rem;
+    }
+}
+
+#sidebarId::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+}
+
+.list {
+    color: #9e9e9e;
+    line-height: 1;
+    font-size: 75%;
+    font-weight: bold;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-top: 0.7rem;
+    border-radius: 5rem;
+    padding: 0.6rem 2rem;
+    border: 1px solid transparent;
+    &:hover {
+        border: 1px solid #37474f;
+    }
 }
 
 @media only screen and (min-width: 2100px) {
