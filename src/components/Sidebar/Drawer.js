@@ -17,7 +17,7 @@ class Sidebar extends Component {
 
     render() {
         return (
-            <div className="sidebar__main" id="sidebarId">   
+            <div className="sidebar__drawer" id="sidebarId2" >   
                 <p>discover</p>   
                     <Link
                     className="list" 

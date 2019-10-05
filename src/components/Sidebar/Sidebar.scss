@@ -16,22 +16,47 @@
     p {
         text-transform: uppercase;
         color: #37474f;
-        font-size: 70%;
+        font-size: 0.8rem;
         font-weight: bold;
         margin-left: 1.8rem;
         margin-top: 1.8rem;
     }
 }
 
-#sidebarId::-webkit-scrollbar {
+.sidebar__drawer {
+    display: block;
+    height: 100%;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    position: fixed;
+    left: 0;
+    top: 0;
+    overflow-y: scroll;
+    overflow-x: scroll;
+    color: white;
+    p {
+        text-transform: uppercase;
+        color: #37474f;
+        font-size: 0.8rem;
+        font-weight: bold;
+        margin-left: 1.8rem;
+        margin-top: 1.8rem;
+    }
+}
+
+
+#sidebarId::-webkit-scrollbar, #sidebarId2::-webkit-scrollbar {
     width: 0px;
     background: transparent; /* make scrollbar transparent */
 }
 
 .list {
+    white-space: nowrap; // force lines not to break
     color: #9e9e9e;
     line-height: 1;
-    font-size: 75%;
+    font-size: 0.8rem; // 75%
     font-weight: bold;
     margin-left: 1rem;
     margin-right: 1rem;
@@ -42,7 +67,33 @@
     &:hover {
         border: 1px solid #37474f;
     }
+    .material-icons {
+        float: left;
+        color:#9e9e9e;
+        font-size: 0.85rem;
+        margin-right: 0.5rem;
+        line-height: 1;
+    }
 }
+
+@media only screen and (max-width: 1280px) {
+    #sidebarId {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 1550px) {
+    .sidebar__main {
+        width: 15vw;
+    }
+    .list {
+        font-size: 0.7rem;
+        .material-icons {
+            font-size: 0.8rem;
+        }
+    }
+}
+
 
 @media only screen and (min-width: 2100px) {
     .sidebar__main {

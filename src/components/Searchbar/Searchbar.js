@@ -19,7 +19,8 @@ class Searchbar extends Component {
         return (
            
             <div className="lol">
-            <form className="right">   
+            <form 
+            className="right">   
                   <input 
                     autoComplete="off"
                     type="text" 
@@ -30,10 +31,11 @@ class Searchbar extends Component {
                     placeholder="Search for a movie"
                     spellCheck="false"
                     />
-                <Link to={{
+                <Link 
+                to={{
                     pathname: `/Search/${this.state.term}`
                 }}>
-                    <button>S</button>
+                    <i className="material-icons">search<button></button></i>
                 </Link>
             </form> 
             </div>

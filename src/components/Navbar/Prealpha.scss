@@ -1,0 +1,13 @@
+#appbar__tweak {
+   display: none;
+}
+
+.menu__icon {
+    color: white;
+}
+
+@media only screen and (max-width: 1280px) {
+    #appbar__tweak {
+        display: block;
+    }
+}

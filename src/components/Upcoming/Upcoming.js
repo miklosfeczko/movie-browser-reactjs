@@ -45,19 +45,27 @@ class Upcoming extends Component {
 
     render() {
         return (
-            <div className="bot">
+            <React.Fragment>
+            <div className="top__title__container">
+                <p className="left__title">
+                {this.props.match.path.substr(1)} <br/>
+                <span className="second__title">movies</span>
+                </p>
+            </div>
+
+            <div className="bottom__container">
                 <div className="main__container">
                 {this.state.MOVIES && this.state.MOVIES.map((MOVIE) => {
 
                     return(
             
-                            <Link
-                            style={{textDecoration: 'none'}} 
-                            key={MOVIE.id} 
-                            to={{
-                                pathname: `/Movie/${MOVIE.id}`                      
-                            }}>
-                            <div className="poster__item">
+                            <div key={MOVIE.id} className="poster__item">
+                                <Link
+                                style={{textDecoration: 'none'}} 
+                                key={MOVIE.id} 
+                                to={{
+                                    pathname: `/Movie/${MOVIE.id}`                      
+                                }}>
                                 <img
                                 alt={MOVIE.title}
                                 src={    
@@ -65,15 +73,16 @@ class Upcoming extends Component {
                                 } 
                                 />
                                 <p className="poster__title">{MOVIE.title}</p>
+                                </Link>
                             </div>
-                            </Link>
-                       
+                                
                     )
                 })}
                  </div>
                 <button style={{float: 'left'}} className="left" onClick={this.backPage}>Back</button>
                 <button className="right" onClick={this.nextPage}>Next</button>      
             </div>
+            </React.Fragment>
         )
     }
 }

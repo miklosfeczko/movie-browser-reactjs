@@ -12,7 +12,7 @@ import Upcoming from './components/Upcoming/Upcoming'
 import Genres from './components/Genres/Genres'
 import Movie from './components/Movie/Movie'
 import Person from './components/Person/Person'
-
+import Prealpha from './components/Navbar/Prealpha'
 
 class App extends React.Component {
 
@@ -20,6 +20,7 @@ class App extends React.Component {
     return (
       
         <Router>
+        <Prealpha />
         <Sidebar />
         <Searchbar />
           <Switch>
