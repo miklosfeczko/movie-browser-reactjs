@@ -18,7 +18,7 @@ class Searchbar extends Component {
         
         return (
            
-            <div className="lol">
+            <div className="searchbar__container">
             <form 
             className="right">   
                   <input 

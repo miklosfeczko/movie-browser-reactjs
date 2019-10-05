@@ -46,12 +46,16 @@ form button {
    border: none;
 }
 
-.lol {
+.searchbar__container {
     margin: auto;
     text-align: right;
     padding-bottom: 3rem;
     margin-right: 0vw;
     margin-top: 1rem;
+}
+
+.right {
+    margin-right: 1.2rem;
 }
 
 @media only screen and (max-width: 1550px) {
@@ -60,5 +64,17 @@ form button {
     }
     form input {
         font-size: 0.8rem;
+    }
+}
+
+@media only screen and (min-width: 3000px) {
+    .right {
+        margin-right: 1vw;
+    }
+}
+
+@media only screen and (min-width: 4000px) {
+    .right {
+        margin-right: 1.2vw;
     }
 }
