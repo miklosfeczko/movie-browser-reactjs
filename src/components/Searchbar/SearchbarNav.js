@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import {Link} from 'react-router-dom'
 
-import './Searchbar.scss'
+import './SearchbarNav.scss'
 
-class Searchbar extends Component {
+class SearchbarNav extends Component {
 
     state = {
         term: ''
@@ -18,9 +18,9 @@ class Searchbar extends Component {
         
         return (
            
-            <div className="searchbar__container">
+            <div className="searchbarnav__container">
             <form 
-            className="searchbar__margin__right">   
+            className="searchbarnav__margin__right">   
                   <input 
                     autoComplete="off"
                     type="text" 
@@ -44,4 +44,4 @@ class Searchbar extends Component {
     }
 }
 
-export default Searchbar;
+export default SearchbarNav;

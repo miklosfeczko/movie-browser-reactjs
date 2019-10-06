@@ -4,6 +4,8 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 
 import Navbar from './Navbar'
+import SearchbarNav from '../Searchbar/SearchbarNav'
+import Typography from '@material-ui/core/Typography';
 import './Prealpha.scss'
 
 const useStyles = makeStyles(theme => ({
@@ -23,10 +25,13 @@ export default function ButtonAppBar() {
 
 return (
     <div className={classes.root} id="appbar__tweak">
-      <AppBar position="static" style={{backgroundColor: '#546e7a'}}>
+      <AppBar position="static" style={{backgroundColor: '#546e7a', position: 'fixed', top: '0'}}>
         <Toolbar style={{padding: '0'}}>
-            <Navbar />   
-        </Toolbar>
+            <Navbar />
+            <Typography variant="h6" className={classes.title}>
+              <SearchbarNav />
+            </Typography>       
+        </Toolbar>     
       </AppBar>
     </div>
   );

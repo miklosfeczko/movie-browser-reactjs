@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {Link} from 'react-router-dom'
 import {upcoming_movie} from '../../services/services'
+import {BASIC_UPCOMING_URL} from '../../services/services'
 
 import '../Popular/Popular'
 
@@ -27,7 +28,7 @@ class Upcoming extends Component {
             MOVIES: []
          })
         count = count+1;
-        fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=e8146f65b965e0a1cb0600c774f8a2a6&language=en-US&page=${count}`)
+        fetch(`${BASIC_UPCOMING_URL}${count}`)
         .then(response => response.json())
         .then(DATA => this.setState({ MOVIES: DATA.results }))
         } else return
@@ -37,7 +38,7 @@ class Upcoming extends Component {
         if (count > 1) {
         this.setState({ MOVIES: []})
         count = count-1;
-        fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=e8146f65b965e0a1cb0600c774f8a2a6&language=en-US&page=${count}`)
+        fetch(`${BASIC_UPCOMING_URL}${count}`)
         .then(response => response.json())
         .then(DATA => this.setState({ MOVIES: DATA.results }))
         } else return
@@ -79,8 +80,8 @@ class Upcoming extends Component {
                     )
                 })}
                  </div>
-                <button style={{float: 'left'}} className="left" onClick={this.backPage}>Back</button>
-                <button className="right" onClick={this.nextPage}>Next</button>      
+                <button style={{float: 'left'}} onClick={this.backPage}>Back</button>
+                <button className="bottom__button__margin__right" onClick={this.nextPage}>Next</button>      
             </div>
             </React.Fragment>
         )

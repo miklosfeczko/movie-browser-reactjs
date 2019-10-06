@@ -1,3 +1,5 @@
+@import "../../utils/variables";
+
 .main__container {
     width: auto;
     margin-left: 14vw;
@@ -21,7 +23,7 @@
     .poster__title {
         padding-top: 1rem;
         text-align: center;
-        color: #546e7a;
+        color: $teal;
         font-size: 85%;
     }
 }
@@ -40,8 +42,9 @@
     padding-bottom: 3rem;
     margin-right: 0vw;
     button {
+        cursor: pointer;
         color: white;
-        background-color: #37474f;
+        background-color: $darkteal;
         border: 1px solid transparent;
         margin-left: 13.5vw;
         display: inline-block;
@@ -58,9 +61,9 @@
 	    -o-transition: all 0.1s linear;
 	    -ms-transition: all 0.1s linear;
         &:hover {
-            color: #37474f;
+            color: $darkteal;
             background-color: white;
-            border: 1px solid #37474f;
+            border: 1px solid $darkteal;
             transition: all 0.1s linear;
             transition: all 0.1s linear;
             -moz-transition: all 0.1s linear;
@@ -78,17 +81,19 @@
     margin-left: 13.5vw;
     text-transform: uppercase;
     font-size: 1.5rem;
-    color: #546e7a;
+    color: $teal;
     font-weight: 300;
     .second__title {
-        color: #37474f;
+        color: $darkteal;
         font-size: 1rem;
         font-weight: bold;
         float: left;
     }
 }
 
-
+.bottom__button__margin__right {
+    margin-right: 1.2rem;
+}
 
 @media only screen and (max-width: 600px) {
     .bottom__container
@@ -187,6 +192,10 @@
     .left__title {
         margin-top: 10vh;
     }
+
+    .bottom__button__margin__right {
+        margin-right: 1vw;
+    }
 }  
 
 
@@ -210,7 +219,9 @@
     .left__title {
         margin-top: 10vh;
     }
-    
+    .bottom__button__margin__right {
+        margin-right: 1.2vw;
+    }
 } 
 
 @media only screen and (max-width: 1280px) {
@@ -226,6 +237,10 @@
 
     .left__title {
         margin-left: 1.2rem;
+    }
+
+    .top__title__container {
+        margin-top: 5rem;
     }
 }
 

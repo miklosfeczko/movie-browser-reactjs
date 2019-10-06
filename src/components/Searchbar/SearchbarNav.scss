@@ -49,23 +49,17 @@ form button {
    border: none;
 }
 
-.searchbar__container {
+.searchbarnav__container {
     position: relative;
-    margin: auto;
+    //margin: auto;
     text-align: right;
-    padding-bottom: 3rem;
+    //padding-bottom: 3rem;
     margin-right: 0vw;
-    margin-top: 1rem;
+    //margin-top: 1rem;
 }
 
-.searchbar__margin__right {
+.searchbarnav__margin__right {
     margin-right: 1.2rem;
-}
-
-@media only screen and (max-width: 1280px) {
-    .searchbar__container {
-        display: none;
-    }
 }
 
 @media only screen and (max-width: 1550px) {
@@ -78,13 +72,13 @@ form button {
 }
 
 @media only screen and (min-width: 3000px) {
-    .searchbar__margin__right {
+    .searchbarnav__margin__right {
         margin-right: 1vw;
     }
 }
 
 @media only screen and (min-width: 4000px) {
-    .searchbar__margin__right {
+    .searchbarnav__margin__right {
         margin-right: 1.2vw;
     }
 }
