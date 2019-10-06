@@ -30,3 +30,12 @@ export const BASIC_POPULAR_URL = `https://api.themoviedb.org/3/movie/popular?api
 
 // SIDEBAR GENRES
 export const BASIC_SIDEBAR_GENRES_URL = `https://api.themoviedb.org/3/genre/movie/list?api_key=e8146f65b965e0a1cb0600c774f8a2a6&language=en-US`;
+
+// GENRES SORT FUNCTIONS
+export const BASIC_GENRES_SORT_URL = `https://api.themoviedb.org/3/discover/movie?api_key=e8146f65b965e0a1cb0600c774f8a2a6&language=en-US&sort_by=`;
+
+export const FILLER_GENRES_SORT_URL = `&include_adult=false&include_video=false&page=1&with_genres=`;
+
+export const FILLER_GENRES_NAVBUTTON_SORT_URL = `&include_adult=false&include_video=false&page=`;
+
+export const END_GENRES_SORT_URL = `&with_genres=`;
