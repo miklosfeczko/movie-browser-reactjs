@@ -11,7 +11,8 @@ class Upcoming extends Component {
 
     state = {
         MOVIES: [],
-        total: ''
+        total: '',
+        loading: true
     }
     
    componentDidMount = async() => {
@@ -26,7 +27,6 @@ class Upcoming extends Component {
             MOVIES:DATA.results,
             total: DATA.total_pages
         });
-        console.log('compdidmount', count, 'count', this.props.location.search.substr(6), 'props')
     }
 
     fetchMovies() {
@@ -39,15 +39,12 @@ class Upcoming extends Component {
         .then(DATA => this.setState({ 
                             MOVIES: DATA.results
         }))}
-        console.log('fetchmovies', count, 'count', this.props.location.search.substr(6), 'props')
     }
 
     componentDidUpdate(prevProps) {
-        console.log('compdidupdate előtt', count, 'count', this.props.location.search.substr(6), 'props')
         //////// OLD //////// if (Number(this.props.location.search.substr(6)) !== count && Number(this.props.location.search.substr(6)) !== 0)
         if (Number(this.props.location.search.substr(6)) !== count) {
-          this.fetchMovies() 
-          console.log('compdidupdate után', count, 'count', this.props.location.search.substr(6), 'props')
+          this.fetchMovies()   
         } else return   
   }
 
@@ -56,7 +53,6 @@ class Upcoming extends Component {
         this.setState({
             MOVIES: []
          })
-         console.log('nextpage', count, 'count', this.props.location.search.substr(6), 'props')
         count = count+1;
         fetch(`${BASIC_UPCOMING_URL}${count}`)
         .then(response => response.json())
@@ -67,7 +63,6 @@ class Upcoming extends Component {
     backPage = async () => {
         if (count > 1) {
         this.setState({ MOVIES: []})
-        console.log('backpage', count, 'count', this.props.location.search.substr(6), 'props')
         count = count-1;
         fetch(`${BASIC_UPCOMING_URL}${count}`)
         .then(response => response.json())
@@ -75,20 +70,27 @@ class Upcoming extends Component {
         } else return
     }
 
+    handleLoader () {
+        this.timeout = setTimeout(() => this.setState({ loading: false }), 1000);
+    }
+    
+    componentWillUnmount() {
+        clearTimeout(this.timeout)
+    }
+
     render() { 
         let backButtonVisible;
         let nextButtonVisible;
         let moviesLength;
         
-        console.log(count, 'eldöntő count')
-        console.log(this.state.total, 'total ')
-        console.log(this.props.location.search.substr(6))
-        if (count < 1) {
+        if (count === 0) {
         moviesLength = <Redirect to={`/Upcoming/?page=1`} />
         } else if (this.state.total !== '' && this.state.total < this.props.location.search.substr(6)) {
         moviesLength = <Redirect to={`/404`} />
+        } else if (count < 0) {
+        moviesLength = <Redirect to={`/404`} />
         }
-
+        
         if (count === 1) {
             backButtonVisible = <button style={{float: 'left', display: 'none'}} onClick={this.backPage}>Back</button>
         } else { backButtonVisible = <button style={{float: 'left'}} onClick={this.backPage}>Back</button>
@@ -97,6 +99,11 @@ class Upcoming extends Component {
         if (this.state.total === count) {
             nextButtonVisible = <button style={{display: 'none'}} className="bottom__button__margin__right" onClick={this.nextPage}>Next</button>
         } else { nextButtonVisible = <button className="bottom__button__margin__right" onClick={this.nextPage}>Next</button>
+        }
+
+        if (this.state.loading) {
+            nextButtonVisible = <button style={{display: 'none'}} className="bottom__button__margin__right" onClick={this.nextPage}>Next</button>
+            backButtonVisible = <button style={{float: 'left', display: 'none'}} onClick={this.backPage}>Back</button>
         }
 
         return (
@@ -112,7 +119,7 @@ class Upcoming extends Component {
             <div className="bottom__container">
                 <div className="main__container">
                 {this.state.MOVIES && this.state.MOVIES.map((MOVIE) => {
-
+                    if(this.state.MOVIES && !this.state.loading) {
                     return(
             
                             <div key={MOVIE.id} className="poster__item">
@@ -130,8 +137,16 @@ class Upcoming extends Component {
                                 />
                                 <p className="poster__title">{MOVIE.title}</p>
                                 </Link>
-                            </div>
-                                
+                            </div>                    
+                    )} else return (
+                        <div>
+                        {this.handleLoader()}
+                        <div className="loading-indicator">
+                        <div className="circle"/>
+                        <div className="circle circle-2" />
+                        <div className="circle circle-3" />
+                        </div>
+                        </div>
                     )
                 })}
                  </div>
