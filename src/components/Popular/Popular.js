@@ -45,6 +45,19 @@ class Popular extends Component {
     }
 
     render() {
+        let backButtonVisible;
+        let nextButtonVisible;
+
+        if (count === 1) {
+            backButtonVisible = <button style={{float: 'left', display: 'none'}} onClick={this.backPage}>Back</button>
+        } else { backButtonVisible = <button style={{float: 'left'}} onClick={this.backPage}>Back</button>
+        }
+
+        if (this.state.total === count) {
+            nextButtonVisible = <button style={{display: 'none'}} className="bottom__button__margin__right" onClick={this.nextPage}>Next</button>
+        } else { nextButtonVisible = <button className="bottom__button__margin__right" onClick={this.nextPage}>Next</button>
+        }
+
         return (
             <React.Fragment>
             <div className="top__title__container">
@@ -80,12 +93,8 @@ class Popular extends Component {
                     )
                 })}
             </div>
-             <button style={{float: 'left'}} onClick={this.backPage}>
-                 Back
-             </button>
-             <button className="bottom__button__margin__right" onClick={this.nextPage}>
-                 Next
-             </button>      
+            {backButtonVisible}
+            {nextButtonVisible} 
             </div>
             </React.Fragment>
         )
