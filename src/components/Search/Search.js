@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 
 let count = 1;
 
@@ -8,12 +8,18 @@ class Search extends Component {
         super(props);
         this.state = {
           MOVIES: [],
-          total: ''
+          total: '',
+          loading: false
         }
     }
 
     componentDidMount = async () => {
-        const MOVIE_RESULTS = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=e8146f65b965e0a1cb0600c774f8a2a6&language=en-US&query=${this.props.match.params.name}&page=1&include_adult=false`);
+        if (Number(this.props.location.search.substr(6)) > 0) {
+            count = Number(this.props.location.search.substr(6));
+            } else {
+                count = 1;
+        }
+        const MOVIE_RESULTS = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=e8146f65b965e0a1cb0600c774f8a2a6&language=en-US&query=${this.props.match.params.name}&page=${count}&include_adult=false`);
         const DATA = await MOVIE_RESULTS.json();
         this.setState({ 
             MOVIES: DATA.results,
@@ -21,20 +27,25 @@ class Search extends Component {
          });
     }
     
-    fetchMovies() { 
-        count = 1; // setting default value after search is submitted.
+    fetchMovies() {
+        if (Number(this.props.location.search.substr(6)) === '') {
+            count = 1;
+        } else { 
+        count = Number(this.props.location.search.substr(6)); // setting default value after search is submitted.
         fetch(`https://api.themoviedb.org/3/search/movie?api_key=e8146f65b965e0a1cb0600c774f8a2a6&language=en-US&query=${this.props.match.params.name}&page=1&include_adult=false`)
           .then(response => response.json())
           .then(DATA => this.setState({ 
                                         MOVIES: DATA.results,
                                         total: DATA.total_pages
-                                    }))
+                                    }))}
     }
 
     componentDidUpdate(prevProps) {
         if (prevProps.match.params.name !== this.props.match.params.name) {
-          this.fetchMovies()
-        } else return
+            this.fetchMovies()
+          } else if (Number(this.props.location.search.substr(6)) !== count) {
+            this.fetchMovies()
+          } else return
     }
 
     nextPage = async () => {
@@ -58,10 +69,29 @@ class Search extends Component {
         .then(DATA => this.setState({ MOVIES: DATA.results }))
         } else return
     }
+
+    handleLoader () {
+        this.timeout = setTimeout(() => this.setState({ loading: false }), 1000);
+    }
+    
+    componentWillUnmount() {
+        clearTimeout(this.timeout)
+    }
     
     render() {
         let backButtonVisible;
         let nextButtonVisible;
+        let moviesLength;
+
+        if (count === 0) {
+            moviesLength = <Redirect to={`/Search/${this.props.match.params.name}?page=1`} />
+            } else if (this.state.total !== '' && this.state.total < this.props.location.search.substr(6)) {
+            moviesLength = <Redirect to={`/404`} />
+            } else if (count < 0) {
+            moviesLength = <Redirect to={`/404`} />
+            } else if (this.state.total === undefined) {
+            moviesLength = <Redirect to={`/404`} />
+        }
 
         if (count === 1) {
             backButtonVisible = <button style={{float: 'left', display: 'none'}} onClick={this.backPage}>Back</button>
@@ -73,8 +103,14 @@ class Search extends Component {
         } else { nextButtonVisible = <button className="bottom__button__margin__right" onClick={this.nextPage}>Next</button>
         }
 
+        if (this.state.loading) {
+            nextButtonVisible = <button style={{display: 'none'}} className="bottom__button__margin__right" onClick={this.nextPage}>Next</button>
+            backButtonVisible = <button style={{float: 'left', display: 'none'}} onClick={this.backPage}>Back</button>
+        }
+
         return (
             <React.Fragment>
+            {moviesLength}
             <div className="top__title__container">
                 <p className="left__title">
                 {this.props.match.params.name} <br/>
@@ -85,7 +121,7 @@ class Search extends Component {
             <div className="bottom__container">  
             <div className="main__container">
                 {this.state.MOVIES && this.state.MOVIES.map((MOVIE) => {
-
+                    if(this.state.MOVIES && !this.state.loading) {
                     return(
                         
                                 <div className="poster__item" key={MOVIE.id}>
@@ -105,11 +141,24 @@ class Search extends Component {
                                 </Link>
                                 </div>
                                                                          
+                    )} else return (
+                        <div>
+                        {this.handleLoader()}
+                        <div className="loading-indicator">
+                        <div className="circle"/>
+                        <div className="circle circle-2" />
+                        <div className="circle circle-3" />
+                        </div>
+                        </div> 
                     )
                 })}
             </div>
-            {backButtonVisible}
-            {nextButtonVisible}
+            <Link
+                 to={`?page=${count-1}`}
+                 >{backButtonVisible}</Link>
+                <Link
+                to={`?page=${count+1}`}
+                >{nextButtonVisible}</Link>
             </div>
             </React.Fragment>
         )

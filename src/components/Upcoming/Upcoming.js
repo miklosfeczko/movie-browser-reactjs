@@ -41,7 +41,7 @@ class Upcoming extends Component {
         }))}
     }
 
-    componentDidUpdate(prevProps) {
+    componentDidUpdate() {
         //////// OLD //////// if (Number(this.props.location.search.substr(6)) !== count && Number(this.props.location.search.substr(6)) !== 0)
         if (Number(this.props.location.search.substr(6)) !== count) {
           this.fetchMovies()   
@@ -82,6 +82,8 @@ class Upcoming extends Component {
         let backButtonVisible;
         let nextButtonVisible;
         let moviesLength;
+        console.log(this.state.total)
+        console.log(this.props.location.search.substr(6))
         
         if (count === 0) {
         moviesLength = <Redirect to={`/Upcoming/?page=1`} />
@@ -89,6 +91,8 @@ class Upcoming extends Component {
         moviesLength = <Redirect to={`/404`} />
         } else if (count < 0) {
         moviesLength = <Redirect to={`/404`} />
+        } else if (this.state.total === undefined) {
+            moviesLength = <Redirect to={`/404`} />
         }
         
         if (count === 1) {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 import {BASIC_GENRES_SORT_URL, FILLER_GENRES_SORT_URL, 
         END_GENRES_SORT_URL, FILLER_GENRES_NAVBUTTON_SORT_URL} from '../../services/services'
 
@@ -9,29 +9,41 @@ let sort = 'popularity.desc';
 class Genres extends Component {
     state = {
         MOVIES: [],
-        total: ''
+        total: '',
+        loading: true
     }
     
     componentDidMount = async () => {
-        const MOVIE_RESULTS = await fetch(`${BASIC_GENRES_SORT_URL}${sort}${FILLER_GENRES_SORT_URL}${this.props.match.params.name}`);
+        if (Number(this.props.location.search.substr(6)) > 0) {
+            count = Number(this.props.location.search.substr(6));
+            } else {
+                count = 1;
+        }
+        const MOVIE_RESULTS = await fetch(`${BASIC_GENRES_SORT_URL}${sort}&include_adult=false&include_video=false&page=${count}&with_genres=${this.props.match.params.name}`);
         const DATA = await MOVIE_RESULTS.json();
         this.setState({ 
             MOVIES: DATA.results,
             total: DATA.total_pages
          });
+         console.log(MOVIE_RESULTS)
     }
 
     fetchMovies() {
-        count = 1;
-        fetch(`${BASIC_GENRES_SORT_URL}${sort}${FILLER_GENRES_SORT_URL}${this.props.match.params.name}`)
+        if (Number(this.props.location.search.substr(6)) === '') {
+            count = 1;
+        } else {
+        count = Number(this.props.location.search.substr(6));
+        fetch(`${BASIC_GENRES_SORT_URL}${sort}&include_adult=false&include_video=false&page=${count}&with_genres=${this.props.match.params.name}`)
         .then(response => response.json())
         .then(DATA => this.setState({ 
                             MOVIES: DATA.results
-        }))
+        }))}
     }
 
    componentDidUpdate(prevProps) {
           if (prevProps.match.params.name !== this.props.match.params.name) {
+            this.fetchMovies()
+          } else if (Number(this.props.location.search.substr(6)) !== count) {
             this.fetchMovies()
           } else return
     }
@@ -58,43 +70,32 @@ class Genres extends Component {
         } else return
     }
 
-    sortChangeTitleAsc = async () => {
-        this.setState({ MOVIES: []})
-        sort = 'original_title.asc'
-        fetch(`${BASIC_GENRES_SORT_URL}${sort}${FILLER_GENRES_SORT_URL}${count}${END_GENRES_SORT_URL}${this.props.match.params.name}`)
-        .then(response => response.json())
-        .then(DATA => this.setState({ MOVIES: DATA.results }))
+    handleLoader () {
+        this.timeout = setTimeout(() => this.setState({ loading: false }), 1000);
     }
-
-    sortChangePopular = async () => {
-        this.setState({ MOVIES: []})
-        sort = 'popularity.desc'
-        fetch(`${BASIC_GENRES_SORT_URL}${sort}${FILLER_GENRES_SORT_URL}${count}${END_GENRES_SORT_URL}${this.props.match.params.name}`)
-        .then(response => response.json())
-        .then(DATA => this.setState({ MOVIES: DATA.results }))
-    }
-
-    sortChangeVoteAvg = async () => {
-        this.setState({ MOVIES: []})
-        sort = 'vote_average.desc'
-        fetch(`${BASIC_GENRES_SORT_URL}${sort}${FILLER_GENRES_SORT_URL}${count}${END_GENRES_SORT_URL}${this.props.match.params.name}`)
-        .then(response => response.json())
-        .then(DATA => this.setState({ MOVIES: DATA.results }))
-    }
-
-    sortChangeReleaseDate = async () => {
-        this.setState({ MOVIES: []})
-        sort = 'release_date.desc'
-        fetch(`${BASIC_GENRES_SORT_URL}${sort}${FILLER_GENRES_SORT_URL}${count}${END_GENRES_SORT_URL}${this.props.match.params.name}`)
-        .then(response => response.json())
-        .then(DATA => this.setState({ MOVIES: DATA.results }))
-    }
-
     
+    componentWillUnmount() {
+        clearTimeout(this.timeout)
+    }
+  
     render() {
         let genre;
         let backButtonVisible;
         let nextButtonVisible;
+        let moviesLength;
+        console.log(this.props)
+        console.log(this.props.location.search.substr(6))
+        console.log(this.state.total)
+
+        if (count === 0) {
+            moviesLength = <Redirect to={`/Genres/${this.props.match.params.name}?page=1`} />
+            } else if (this.state.total !== '' && this.state.total < this.props.location.search.substr(6)) {
+            moviesLength = <Redirect to={`/404`} />
+            } else if (count < 0) {
+            moviesLength = <Redirect to={`/404`} />
+            } else if (this.state.total === undefined) {
+            moviesLength = <Redirect to={`/404`} />
+        }
 
         if (count === 1) {
             backButtonVisible = <button style={{float: 'left', display: 'none'}} onClick={this.backPage}>Back</button>
@@ -106,6 +107,10 @@ class Genres extends Component {
         } else { nextButtonVisible = <button className="bottom__button__margin__right" onClick={this.nextPage}>Next</button>
         }
 
+        if (this.state.loading) {
+            nextButtonVisible = <button style={{display: 'none'}} className="bottom__button__margin__right" onClick={this.nextPage}>Next</button>
+            backButtonVisible = <button style={{float: 'left', display: 'none'}} onClick={this.backPage}>Back</button>
+        }
 
         switch(this.props.match.params.name) {
             case '28': genre = 'Action';
@@ -151,6 +156,7 @@ class Genres extends Component {
 
         return (
             <React.Fragment>
+            {moviesLength}
              <div className="top__title__container">
                 <p className="left__title">
                 {genre} <br/>
@@ -161,7 +167,7 @@ class Genres extends Component {
             <div className="bottom__container">  
             <div className="main__container">
                 {this.state.MOVIES && this.state.MOVIES.map((MOVIE) => {
-
+                     if(this.state.MOVIES && !this.state.loading) {
                     return(
                         <div className="poster__item" key={MOVIE.id}>
                                 <Link 
@@ -179,12 +185,25 @@ class Genres extends Component {
                                 <p className="poster__title">{MOVIE.title}</p>
                                 </Link>
                                 </div>
+                    )} else return (
+                        <div>
+                        {this.handleLoader()}
+                        <div className="loading-indicator">
+                        <div className="circle"/>
+                        <div className="circle circle-2" />
+                        <div className="circle circle-3" />
+                        </div>
+                        </div> 
                     )
                 })}
                 </div>
-                {backButtonVisible}
-                {nextButtonVisible}
-            </div>
+                <Link
+                 to={`?page=${count-1}`}
+                 >{backButtonVisible}</Link>
+                <Link
+                to={`?page=${count+1}`}
+                >{nextButtonVisible}</Link>   
+                </div>
             </React.Fragment>
         )
     }
