@@ -19,11 +19,9 @@ class Movie extends Component {
         const CAST_RESULTS = await fetch(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=e8146f65b965e0a1cb0600c774f8a2a6`);
         const CAST_DATA = await CAST_RESULTS.json();
         this.setState({ CAST: CAST_DATA.cast })
-        console.log(this.state.CAST)
     }
 
     render() {
-        console.log(this.props.match.params.name)
         return (
             <div className="cast__main__container">
                 {this.state.CAST && this.state.CAST.map((CAST, index) => {

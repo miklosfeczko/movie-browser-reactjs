@@ -14,30 +14,21 @@ class Genres extends Component {
     }
     
     componentDidMount = async () => {
-        if (Number(this.props.location.search.substr(6)) > 0) {
-            count = Number(this.props.location.search.substr(6));
-            } else {
-                count = 1;
-        }
-        const MOVIE_RESULTS = await fetch(`${BASIC_GENRES_SORT_URL}${sort}&include_adult=false&include_video=false&page=${count}&with_genres=${this.props.match.params.name}`);
+        const MOVIE_RESULTS = await fetch(`${BASIC_GENRES_SORT_URL}${sort}${FILLER_GENRES_SORT_URL}${count}${END_GENRES_SORT_URL}${this.props.match.params.name}`);
         const DATA = await MOVIE_RESULTS.json();
         this.setState({ 
             MOVIES: DATA.results,
             total: DATA.total_pages
          });
-         console.log(MOVIE_RESULTS)
     }
 
     fetchMovies() {
-        if (Number(this.props.location.search.substr(6)) === '') {
-            count = 1;
-        } else {
         count = Number(this.props.location.search.substr(6));
-        fetch(`${BASIC_GENRES_SORT_URL}${sort}&include_adult=false&include_video=false&page=${count}&with_genres=${this.props.match.params.name}`)
+        fetch(`${BASIC_GENRES_SORT_URL}${sort}${FILLER_GENRES_SORT_URL}${count}${END_GENRES_SORT_URL}${this.props.match.params.name}`)
         .then(response => response.json())
         .then(DATA => this.setState({ 
                             MOVIES: DATA.results
-        }))}
+        }))
     }
 
    componentDidUpdate(prevProps) {
@@ -83,9 +74,6 @@ class Genres extends Component {
         let backButtonVisible;
         let nextButtonVisible;
         let moviesLength;
-        console.log(this.props)
-        console.log(this.props.location.search.substr(6))
-        console.log(this.state.total)
 
         if (count === 0) {
             moviesLength = <Redirect to={`/Genres/${this.props.match.params.name}?page=1`} />

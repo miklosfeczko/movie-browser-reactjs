@@ -16,11 +16,6 @@ class Upcoming extends Component {
     }
     
    componentDidMount = async() => {
-        if (Number(this.props.location.search.substr(6)) > 0) {
-        count = Number(this.props.location.search.substr(6));
-        } else {
-            count = 1;
-        }
         const MOVIE_RESULTS = await fetch(`${upcoming_movie}${count}`);
         const DATA = await MOVIE_RESULTS.json();
         this.setState({ 
@@ -30,15 +25,12 @@ class Upcoming extends Component {
     }
 
     fetchMovies() {
-        if (Number(this.props.location.search.substr(6)) === '') {
-            count = 1;
-        } else {
         count = Number(this.props.location.search.substr(6));
         fetch(`${upcoming_movie}${count}`)
         .then(response => response.json())
         .then(DATA => this.setState({ 
                             MOVIES: DATA.results
-        }))}
+        }))
     }
 
     componentDidUpdate() {
@@ -82,8 +74,6 @@ class Upcoming extends Component {
         let backButtonVisible;
         let nextButtonVisible;
         let moviesLength;
-        console.log(this.state.total)
-        console.log(this.props.location.search.substr(6))
         
         if (count === 0) {
         moviesLength = <Redirect to={`/Upcoming/?page=1`} />

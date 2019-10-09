@@ -1,23 +1,5 @@
 const API_KEY = "e8146f65b965e0a1cb0600c774f8a2a6";
 
-// fetching popular movies
-export const UNUSED_popular_movie = async(e) => {
-    const MOVIE_RESULTS = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1`);
-    return MOVIE_RESULTS.json();
-}
-
-// fetching top rated movies
-export const UNUSED_toprated_movie = async(e) => {
-    const MOVIE_RESULTS = await fetch(`https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language=en-US&page=1`);
-    return MOVIE_RESULTS.json();
-}
-
-// fetching upcoming movies
-export const UNUSED_upcoming_movie = async(e) => {
-    const MOVIE_RESULTS = await fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}&language=en-US&page=1`);
-    return MOVIE_RESULTS.json();
-}
-
 // fetching popular
 export const popular_movie = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=`;
 // fetching top rated
@@ -41,11 +23,18 @@ export const BASIC_SIDEBAR_GENRES_URL = `https://api.themoviedb.org/3/genre/movi
 // GENRES SORT FUNCTIONS
 export const BASIC_GENRES_SORT_URL = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=`;
 
-export const FILLER_GENRES_SORT_URL = `&include_adult=false&include_video=false&page=1&with_genres=`;
+export const FILLER_GENRES_SORT_URL = `&include_adult=false&include_video=false&page=`;
 
 export const FILLER_GENRES_NAVBUTTON_SORT_URL = `&include_adult=false&include_video=false&page=`;
 
 export const END_GENRES_SORT_URL = `&with_genres=`;
+
+// SEARCH FETCHING PARAMS
+export const BASIC_SEARCH_URL = `https://api.themoviedb.org/3/search/movie?api_key=e8146f65b965e0a1cb0600c774f8a2a6&language=en-US&query=`
+
+export const BASIC_SEARCH_PAGE = `&page=`;
+
+export const BASIC_SEARCH_END = `&include_adult=false`;
 
 /*
 sortChangeTitleAsc = async () => {

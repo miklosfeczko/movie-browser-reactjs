@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {Link, Redirect} from 'react-router-dom'
+import {BASIC_SEARCH_URL, BASIC_SEARCH_PAGE, BASIC_SEARCH_END} from '../../services/services'
 
 let count = 1;
 
@@ -9,17 +10,12 @@ class Search extends Component {
         this.state = {
           MOVIES: [],
           total: '',
-          loading: false
+          loading: true
         }
     }
 
     componentDidMount = async () => {
-        if (Number(this.props.location.search.substr(6)) > 0) {
-            count = Number(this.props.location.search.substr(6));
-            } else {
-                count = 1;
-        }
-        const MOVIE_RESULTS = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=e8146f65b965e0a1cb0600c774f8a2a6&language=en-US&query=${this.props.match.params.name}&page=${count}&include_adult=false`);
+        const MOVIE_RESULTS = await fetch(`${BASIC_SEARCH_URL}${this.props.match.params.name}${BASIC_SEARCH_PAGE}${count}${BASIC_SEARCH_END}`);
         const DATA = await MOVIE_RESULTS.json();
         this.setState({ 
             MOVIES: DATA.results,
@@ -28,16 +24,13 @@ class Search extends Component {
     }
     
     fetchMovies() {
-        if (Number(this.props.location.search.substr(6)) === '') {
-            count = 1;
-        } else { 
         count = Number(this.props.location.search.substr(6)); // setting default value after search is submitted.
-        fetch(`https://api.themoviedb.org/3/search/movie?api_key=e8146f65b965e0a1cb0600c774f8a2a6&language=en-US&query=${this.props.match.params.name}&page=1&include_adult=false`)
+        fetch(`${BASIC_SEARCH_URL}${this.props.match.params.name}${BASIC_SEARCH_PAGE}${count}${BASIC_SEARCH_END}`)
           .then(response => response.json())
           .then(DATA => this.setState({ 
                                         MOVIES: DATA.results,
                                         total: DATA.total_pages
-                                    }))}
+        }))
     }
 
     componentDidUpdate(prevProps) {
@@ -54,7 +47,7 @@ class Search extends Component {
             MOVIES: []
          })
         count = count+1;
-        fetch(`https://api.themoviedb.org/3/search/movie?api_key=e8146f65b965e0a1cb0600c774f8a2a6&language=en-US&query=${this.props.match.params.name}&page=${count}&include_adult=false`)
+        fetch(`${BASIC_SEARCH_URL}${this.props.match.params.name}${BASIC_SEARCH_PAGE}${count}${BASIC_SEARCH_END}`)
         .then(response => response.json())
         .then(DATA => this.setState({ MOVIES: DATA.results }))
         } else return
@@ -64,14 +57,14 @@ class Search extends Component {
         if (count > 1) {
         this.setState({ MOVIES: []})
         count = count-1;
-        fetch(`https://api.themoviedb.org/3/search/movie?api_key=e8146f65b965e0a1cb0600c774f8a2a6&language=en-US&query=${this.props.match.params.name}&page=${count}&include_adult=false`)
+        fetch(`${BASIC_SEARCH_URL}${this.props.match.params.name}${BASIC_SEARCH_PAGE}${count}${BASIC_SEARCH_END}`)
         .then(response => response.json())
         .then(DATA => this.setState({ MOVIES: DATA.results }))
         } else return
     }
 
     handleLoader () {
-        this.timeout = setTimeout(() => this.setState({ loading: false }), 1000);
+        this.timeout = setTimeout(() => this.setState({ loading: false }), 2500);
     }
     
     componentWillUnmount() {

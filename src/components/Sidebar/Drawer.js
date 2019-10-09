@@ -13,7 +13,6 @@ class Sidebar extends Component {
         const GENRE_RESULTS = await fetch(`${BASIC_SIDEBAR_GENRES_URL}`);
         const DATA = await GENRE_RESULTS.json();
         this.setState({ GENRES: DATA.genres });
-        console.log(this.state.GENRES)
     }
 
     render() {

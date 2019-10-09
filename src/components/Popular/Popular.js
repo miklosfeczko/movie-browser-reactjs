@@ -15,30 +15,21 @@ class Popular extends Component {
     }
     
     componentDidMount = async() => {
-        if (Number(this.props.location.search.substr(6)) > 0) {
-            count = Number(this.props.location.search.substr(6));
-            } else {
-                count = 1;
-        }
         const MOVIE_RESULTS = await fetch(`${popular_movie}${count}`);
         const DATA = await MOVIE_RESULTS.json();
         this.setState({ 
             MOVIES: DATA.results,
             total: DATA.total_pages
         });
-        console.log(MOVIE_RESULTS)
     }
 
     fetchMovies() {
-        if (Number(this.props.location.search.substr(6)) === '') {
-            count = 1;
-        } else {
         count = Number(this.props.location.search.substr(6));
         fetch(`${popular_movie}${count}`)
         .then(response => response.json())
         .then(DATA => this.setState({ 
                             MOVIES: DATA.results
-        }))}
+        }))
     }
 
     componentDidUpdate() {
@@ -74,16 +65,13 @@ class Popular extends Component {
     }
     
     componentWillUnmount() {
-        clearTimeout(this.timeout)
+        clearTimeout(this.timeout);
     }
 
     render() {
         let backButtonVisible;
         let nextButtonVisible;
         let moviesLength;
-        console.log(this.state.total, 'ez a state')
-        console.log(this.props.location.search.substr(6), 'ez a props')
-        console.log(count, 'ez a count')
 
         if (count === 0) {
             moviesLength = <Redirect to={`/Popular/?page=1`} />

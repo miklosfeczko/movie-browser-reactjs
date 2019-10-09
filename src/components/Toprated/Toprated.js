@@ -16,11 +16,6 @@ class Toprated extends Component {
     }
     
     componentDidMount = async() => {
-        if (Number(this.props.location.search.substr(6)) > 0) {
-            count = Number(this.props.location.search.substr(6));
-            } else {
-                count = 1;
-            }
             const MOVIE_RESULTS = await fetch(`${toprated_movie}${count}`);
             const DATA = await MOVIE_RESULTS.json();
             this.setState({ 
@@ -30,15 +25,12 @@ class Toprated extends Component {
     }
 
     fetchMovies() {
-        if (Number(this.props.location.search.substr(6)) === '') {
-            count = 1;
-        } else {
         count = Number(this.props.location.search.substr(6));
         fetch(`${toprated_movie}${count}`)
         .then(response => response.json())
         .then(DATA => this.setState({ 
                             MOVIES: DATA.results
-        }))}
+        }))
     }
 
     componentDidUpdate() {
