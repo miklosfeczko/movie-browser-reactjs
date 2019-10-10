@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import {Link, Redirect} from 'react-router-dom'
+import { Fade } from "react-reveal";
+import placeholderImg from "../../placeholder.jpg";
 import {toprated_movie} from '../../services/services'
 import {BASIC_TOPRATED_URL} from '../../services/services'
 
@@ -62,13 +64,13 @@ class Toprated extends Component {
     }
 
     handleLoader () {
-        this.timeout = setTimeout(() => this.setState({ loading: false }), 1000);
+        this.timeout = setTimeout(() => this.setState({ loading: false }), 500);
     }
     
     componentWillUnmount() {
-        clearTimeout(this.timeout)
+        clearTimeout(this.timeout);
     }
-
+    
     render() {
         let backButtonVisible;
         let nextButtonVisible;
@@ -94,11 +96,7 @@ class Toprated extends Component {
         } else { nextButtonVisible = <button className="bottom__button__margin__right" onClick={this.nextPage}>Next</button>
         }
 
-        if (this.state.loading) {
-            nextButtonVisible = <button style={{display: 'none'}} className="bottom__button__margin__right" onClick={this.nextPage}>Next</button>
-            backButtonVisible = <button style={{float: 'left', display: 'none'}} onClick={this.backPage}>Back</button>
-        }
-
+    
         return (
             <React.Fragment>
             {moviesLength}
@@ -112,35 +110,33 @@ class Toprated extends Component {
             <div className="bottom__container">
                 <div className="main__container">
             {this.state.MOVIES && this.state.MOVIES.map((MOVIE) => {
-                  if(this.state.MOVIES && !this.state.loading) {
+                if(this.state.MOVIES && !this.state.loading) {
                 return(
-                    
-                        <div className="poster__item" key={MOVIE.id}>
+                        <Fade key={MOVIE.id}>
+                        <div className="poster__item">
                                 <Link 
                                 style={{textDecoration: 'none'}}
                                 key={MOVIE.id} 
                                 to={{
                                         pathname: `/Movie/${MOVIE.id}`                      
-                                }}>
+                                }}>                 
                                 <img
                                 alt={MOVIE.title}
-                                src={    
-                                    `https://image.tmdb.org/t/p/original${MOVIE.poster_path}`                                  
+                                src={MOVIE.poster_path
+                                   ? `https://image.tmdb.org/t/p/original${MOVIE.poster_path}`   
+                                   : placeholderImg                              
                                 } 
                                 />
                                 <p className="poster__title">{MOVIE.title}</p>
                                 </Link>
-                        </div>               
-                   )} else return (
-                    <div>
-                    {this.handleLoader()}
-                    <div className="loading-indicator">
-                    <div className="circle"/>
-                    <div className="circle circle-2" />
-                    <div className="circle circle-3" />
-                    </div>
-                    </div> 
-                )
+                        </div>
+                        </Fade>             
+                   )}
+                   else return (
+                        <div key={MOVIE.id}>
+                        {this.handleLoader()}
+                        </div>
+                   )
             })}
                 </div>
                  <Link

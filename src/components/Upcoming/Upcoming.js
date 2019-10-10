@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {Link, Redirect} from 'react-router-dom'
+import { Fade } from "react-reveal";
 import {upcoming_movie} from '../../services/services'
 import {BASIC_UPCOMING_URL} from '../../services/services'
 
@@ -31,6 +32,7 @@ class Upcoming extends Component {
         .then(DATA => this.setState({ 
                             MOVIES: DATA.results
         }))
+        console.log(count)
     }
 
     componentDidUpdate() {
@@ -63,7 +65,7 @@ class Upcoming extends Component {
     }
 
     handleLoader () {
-        this.timeout = setTimeout(() => this.setState({ loading: false }), 1000);
+        this.timeout = setTimeout(() => this.setState({ loading: false }), 500);
     }
     
     componentWillUnmount() {
@@ -115,31 +117,29 @@ class Upcoming extends Component {
                 {this.state.MOVIES && this.state.MOVIES.map((MOVIE) => {
                     if(this.state.MOVIES && !this.state.loading) {
                     return(
-            
-                            <div key={MOVIE.id} className="poster__item">
+                        
+                            <Fade key={MOVIE.id}>
+                            <div className="poster__item">                           
                                 <Link
                                 style={{textDecoration: 'none'}} 
                                 key={MOVIE.id} 
                                 to={{
                                     pathname: `/Movie/${MOVIE.id}`                      
-                                }}>
+                                }}>                      
                                 <img
                                 alt={MOVIE.title}
                                 src={    
                                     `https://image.tmdb.org/t/p/original${MOVIE.poster_path}`                                  
                                 } 
                                 />
-                                <p className="poster__title">{MOVIE.title}</p>
+                                <p className="poster__title">{MOVIE.title}</p>   
                                 </Link>
-                            </div>                    
+                            </div> 
+                            </Fade>
+                                          
                     )} else return (
-                        <div>
+                        <div key={MOVIE.id}>
                         {this.handleLoader()}
-                        <div className="loading-indicator">
-                        <div className="circle"/>
-                        <div className="circle circle-2" />
-                        <div className="circle circle-3" />
-                        </div>
                         </div>
                     )
                 })}

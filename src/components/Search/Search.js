@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import {Link, Redirect} from 'react-router-dom'
+import { Fade } from "react-reveal";
+import placeholderImg from "../../placeholder.jpg";
 import {BASIC_SEARCH_URL, BASIC_SEARCH_PAGE, BASIC_SEARCH_END} from '../../services/services'
 
 let count = 1;
@@ -64,7 +66,7 @@ class Search extends Component {
     }
 
     handleLoader () {
-        this.timeout = setTimeout(() => this.setState({ loading: false }), 2500);
+        this.timeout = setTimeout(() => this.setState({ loading: false }), 500);
     }
     
     componentWillUnmount() {
@@ -116,8 +118,8 @@ class Search extends Component {
                 {this.state.MOVIES && this.state.MOVIES.map((MOVIE) => {
                     if(this.state.MOVIES && !this.state.loading) {
                     return(
-                        
-                                <div className="poster__item" key={MOVIE.id}>
+                            <Fade key={MOVIE.id}>
+                                <div className="poster__item">
                                 <Link 
                                     style={{ textDecoration: 'none'}}
                                     key={MOVIE.id} 
@@ -126,22 +128,18 @@ class Search extends Component {
                                     }}>
                                 <img
                                 alt={MOVIE.title}
-                                src={    
-                                    `https://image.tmdb.org/t/p/original${MOVIE.poster_path}`                                  
+                                src={MOVIE.poster_path 
+                                   ? `https://image.tmdb.org/t/p/original${MOVIE.poster_path}`    
+                                   : placeholderImg                            
                                 } 
                                 />                    
                                 <p className="poster__title">{MOVIE.title}</p>
                                 </Link>
                                 </div>
-                                                                         
+                            </Fade>                                              
                     )} else return (
-                        <div>
+                        <div key={MOVIE.id}>
                         {this.handleLoader()}
-                        <div className="loading-indicator">
-                        <div className="circle"/>
-                        <div className="circle circle-2" />
-                        <div className="circle circle-3" />
-                        </div>
                         </div> 
                     )
                 })}

@@ -62,15 +62,6 @@ form button {
     margin-right: 1.2rem;
 }
 
-@media only screen and (max-width: 1550px) {
-    form {
-        font-size: 0.8rem;
-    }
-    form input {
-        font-size: 0.8rem;
-    }
-}
-
 @media only screen and (min-width: 3000px) {
     .searchbarnav__margin__right {
         margin-right: 1vw;
@@ -82,3 +73,28 @@ form button {
         margin-right: 1.2vw;
     }
 }
+
+@media only screen and (max-width: 1550px) {
+    form {
+        font-size: 0.8rem;
+    }
+    form input {
+        font-size: 0.8rem;
+    }
+}
+
+@media only screen and (max-width: 360px) {  
+    form input {
+        font-size: 0.75rem;
+    }
+}
+
+@media only screen and (max-width: 320px) {  
+    form input {
+        font-size: 0.64rem;
+    }
+}
+
+
+
+

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {Link, Redirect} from 'react-router-dom'
+import { Fade } from "react-reveal";
 import {BASIC_GENRES_SORT_URL, FILLER_GENRES_SORT_URL, 
         END_GENRES_SORT_URL, FILLER_GENRES_NAVBUTTON_SORT_URL} from '../../services/services'
 
@@ -62,7 +63,7 @@ class Genres extends Component {
     }
 
     handleLoader () {
-        this.timeout = setTimeout(() => this.setState({ loading: false }), 1000);
+        this.timeout = setTimeout(() => this.setState({ loading: false }), 500);
     }
     
     componentWillUnmount() {
@@ -157,7 +158,8 @@ class Genres extends Component {
                 {this.state.MOVIES && this.state.MOVIES.map((MOVIE) => {
                      if(this.state.MOVIES && !this.state.loading) {
                     return(
-                        <div className="poster__item" key={MOVIE.id}>
+                        <Fade key={MOVIE.id}>
+                        <div className="poster__item">
                                 <Link 
                                     style={{ textDecoration: 'none'}}
                                     key={MOVIE.id} 
@@ -173,14 +175,10 @@ class Genres extends Component {
                                 <p className="poster__title">{MOVIE.title}</p>
                                 </Link>
                                 </div>
+                        </Fade>
                     )} else return (
-                        <div>
+                        <div key={MOVIE.id}>
                         {this.handleLoader()}
-                        <div className="loading-indicator">
-                        <div className="circle"/>
-                        <div className="circle circle-2" />
-                        <div className="circle circle-3" />
-                        </div>
                         </div> 
                     )
                 })}
