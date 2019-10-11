@@ -28,7 +28,7 @@
 .sidebar__drawer {
     display: block;
     height: 100%;
-    background: white;
+    background: $darkteal;
     display: flex;
     flex-direction: column;
     align-items: left;
@@ -38,6 +38,7 @@
     overflow-y: scroll;
     overflow-x: scroll;
     color: white;
+    width: 16rem;
     p {
         text-transform: uppercase;
         color: $darkteal;

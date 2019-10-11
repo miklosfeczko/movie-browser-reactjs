@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import {Link, Redirect} from 'react-router-dom'
 import { Fade } from "react-reveal";
+import Box from '@material-ui/core/Box';
 import placeholderImg from "../../placeholder.jpg";
-import {toprated_movie} from '../../services/services'
 import {BASIC_TOPRATED_URL} from '../../services/services'
+import {StyledRating} from '../../utils/StyledRating'
+import '../Popular/Popular.scss'
 
-import '../Popular/Popular'
 
 let count = 1;
 
@@ -18,18 +19,21 @@ class Toprated extends Component {
     
     componentDidMount = async() => {
             if (count !== 0) {
-            const MOVIE_RESULTS = await fetch(`${toprated_movie}${count}`);
+            const MOVIE_RESULTS = await fetch(`${BASIC_TOPRATED_URL}${count}`);
             const DATA = await MOVIE_RESULTS.json();
             this.setState({ 
                 MOVIES:DATA.results,
                 total: DATA.total_pages
         })};
+        if (this.state.total === undefined) {
+            this.fetchMovies()
+        }
     }
 
     fetchMovies() {
         count = Number(this.props.location.search.substr(6));
         if (count !== 0) {
-        fetch(`${toprated_movie}${count}`)
+        fetch(`${BASIC_TOPRATED_URL}${count}`)
         .then(response => response.json())
         .then(DATA => this.setState({ 
                             MOVIES: DATA.results
@@ -73,8 +77,11 @@ class Toprated extends Component {
         let backButtonVisible;
         let nextButtonVisible;
         let moviesLength;
+        let pageCount = Number(this.props.location.search.substr(6));
 
-       if(this.props.location.search.substr(6) === '' || this.props.location.search.substr(6) === 0) {
+        if(pageCount === 0) {
+            moviesLength = <Redirect to={`/Toprated/?page=1`} />
+            } else if(this.props.location.search.substr(6) === '' || this.props.location.search.substr(6) === 0) {
             moviesLength = <Redirect to={`/Toprated/?page=1`} />
             } else if (count === 0 && this.props.location.search.substr(6) === '' ) {
             moviesLength = <Redirect to={`/Toprated/?page=1`} />
@@ -128,6 +135,9 @@ class Toprated extends Component {
                                 } 
                                 />
                                 <p className="poster__title">{MOVIE.title}</p>
+                                <Box style={{textAlign: 'center'}}>
+                                <StyledRating name="half-rating" value={MOVIE.vote_average/2} precision={0.25} readOnly/>
+                                </Box>
                                 </Link>
                         </div>
                         </Fade>             

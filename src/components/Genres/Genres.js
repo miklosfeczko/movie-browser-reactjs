@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
 import {Link, Redirect} from 'react-router-dom'
 import { Fade } from "react-reveal";
+import Box from '@material-ui/core/Box';
 import placeholderImg from "../../placeholder.jpg";
+import '../Popular/Popular.scss'
 import {BASIC_GENRES_SORT_URL, FILLER_GENRES_SORT_URL, 
         END_GENRES_SORT_URL, FILLER_GENRES_NAVBUTTON_SORT_URL} from '../../services/services'
+import {StyledRating} from '../../utils/StyledRating'
 
 let count = 1;
 let sort = 'popularity.desc';
@@ -22,6 +25,9 @@ class Genres extends Component {
             MOVIES: DATA.results,
             total: DATA.total_pages
          })};
+         if (this.state.total === undefined) {
+            this.fetchMovies()
+        }
     }
 
     fetchMovies() {
@@ -70,8 +76,11 @@ class Genres extends Component {
         let backButtonVisible;
         let nextButtonVisible;
         let moviesLength;
+        let pageCount = Number(this.props.location.search.substr(6));
 
-        if(this.props.location.search.substr(6) === '' || this.props.location.search.substr(6) === 0) {
+        if(pageCount === 0) {
+            moviesLength = <Redirect to={`/Genres/${this.props.match.params.name}?page=1`} />
+            } else if(this.props.location.search.substr(6) === '' || this.props.location.search.substr(6) === 0) {
             moviesLength = <Redirect to={`/Genres/${this.props.match.params.name}?page=1`} />
             } else if (count === 0 && this.props.location.search.substr(6) === '' ) {
             moviesLength = <Redirect to={`/Genres/${this.props.match.params.name}?page=1`} />
@@ -168,6 +177,9 @@ class Genres extends Component {
                                 } 
                                 />                    
                                 <p className="poster__title">{MOVIE.title}</p>
+                                <Box style={{textAlign: 'center'}}>
+                                <StyledRating name="half-rating" value={MOVIE.vote_average/2} precision={0.25} readOnly/>
+                                </Box>
                                 </Link>
                                 </div>
                         </Fade>

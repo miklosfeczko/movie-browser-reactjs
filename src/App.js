@@ -13,6 +13,7 @@ import Genres from './components/Genres/Genres'
 import Movie from './components/Movie/Movie'
 import Person from './components/Person/Person'
 import Prealpha from './components/Navbar/Prealpha'
+import Error from './components/Error/Error'
 
 class App extends React.Component {
 
@@ -24,6 +25,13 @@ class App extends React.Component {
         <Sidebar />
         <Searchbar />
           <Switch>
+            <Route exact path="/" render={() => (
+              <Redirect 
+              from={"/"}
+              to={"/Popular"}
+              />
+            )}
+            />
             <Route exact path="/Popular" component={Popular} />
             <Route exact path="/Toprated" component={Toprated} />
             <Route exact path="/Upcoming" component={Upcoming} /> 
@@ -31,6 +39,7 @@ class App extends React.Component {
             <Route exact path="/Genres/:name" component={Genres} />
             <Route exact path="/Movie/:name" component={Movie} />
             <Route exact path="/Person/:name" component={Person} />
+            <Route exact path="/404" component={Error} />
           </Switch>
         </Router>
       

@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import {Link, Redirect} from 'react-router-dom'
 import { Fade } from "react-reveal";
+import Box from '@material-ui/core/Box';
 import placeholderImg from "../../placeholder.jpg";
-import {popular_movie, BASIC_POPULAR_URL} from '../../services/services'
-
+import {BASIC_POPULAR_URL} from '../../services/services'
+import {StyledRating} from '../../utils/StyledRating'
 import './Popular.scss'
+
 
 let count = 1;
 
@@ -14,21 +16,24 @@ class Popular extends Component {
         MOVIES: [],
         total: ''
     }
-    
+
     componentDidMount = async() => {
         if (count !== 0) {
-        const MOVIE_RESULTS = await fetch(`${popular_movie}${count}`);
+        const MOVIE_RESULTS = await fetch(`${BASIC_POPULAR_URL}${count}`);
         const DATA = await MOVIE_RESULTS.json();
         this.setState({ 
             MOVIES: DATA.results,
             total: DATA.total_pages
         })};
+        if (this.state.total === undefined) {
+            this.fetchMovies()
+        }
     }
 
     fetchMovies() {
         count = Number(this.props.location.search.substr(6));
         if (count !== 0) {
-        fetch(`${popular_movie}${count}`)
+        fetch(`${BASIC_POPULAR_URL}${count}`)
         .then(response => response.json())
         .then(DATA => this.setState({ 
                             MOVIES: DATA.results
@@ -43,7 +48,7 @@ class Popular extends Component {
         if (Number(this.props.location.search.substr(6)) !== count) {
           this.fetchMovies()   
           count = Number(this.props.location.search.substr(6));
-        } else return   
+        } else return
   }
 
     nextPage = async () => {
@@ -73,8 +78,11 @@ class Popular extends Component {
         let backButtonVisible;
         let nextButtonVisible;
         let moviesLength;
-
-        if(this.props.location.search.substr(6) === '' || this.props.location.search.substr(6) === 0) {
+        let pageCount = Number(this.props.location.search.substr(6));
+       
+        if(pageCount === 0) {
+            moviesLength = <Redirect to={`/Popular/?page=1`} />
+            } else if(this.props.location.search.substr(6) === '' || this.props.location.search.substr(6) === 0) {
             moviesLength = <Redirect to={`/Popular/?page=1`} />
             } else if (count === 0 && this.props.location.search.substr(6) === '' ) {
             moviesLength = <Redirect to={`/Popular/?page=1`} />
@@ -84,7 +92,7 @@ class Popular extends Component {
             moviesLength = <Redirect to={`/404`} />
             } else if (this.state.total === undefined && count === 1 && this.props.location.search.substr(6) === '') {
             moviesLength = <Redirect to={`/404`} />
-            } 
+        } 
 
         if (count === 1) {
             backButtonVisible = <button style={{float: 'left', display: 'none'}} onClick={this.backPage}>Back</button>
@@ -96,7 +104,7 @@ class Popular extends Component {
         } else { nextButtonVisible = <button className="bottom__button__margin__right" onClick={this.nextPage}>Next</button>
         }
 
-
+       
         return (
             <React.Fragment>
             {moviesLength}
@@ -128,6 +136,9 @@ class Popular extends Component {
                                 } 
                                 />                    
                                 <p className="poster__title">{MOVIE.title}</p>
+                                <Box style={{textAlign: 'center'}}>
+                                <StyledRating name="half-rating" value={MOVIE.vote_average/2} precision={0.25} readOnly/>
+                                </Box>
                                 </Link>
                                 </div>
                                 </Fade>

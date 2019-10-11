@@ -1,8 +1,12 @@
 import React, { Component } from 'react'
 import {Link, Redirect} from 'react-router-dom'
 import { Fade } from "react-reveal";
+import Box from '@material-ui/core/Box';
 import placeholderImg from "../../placeholder.jpg";
 import {BASIC_SEARCH_URL, BASIC_SEARCH_PAGE, BASIC_SEARCH_END} from '../../services/services'
+import '../Popular/Popular.scss'
+import {StyledRating} from '../../utils/StyledRating'
+
 
 let count = 1;
 
@@ -23,6 +27,9 @@ class Search extends Component {
             MOVIES: DATA.results,
             total: DATA.total_pages
          })};
+         if (this.state.total === undefined) {
+            this.fetchMovies()
+        }
     }
     
     fetchMovies() {
@@ -70,8 +77,11 @@ class Search extends Component {
         let backButtonVisible;
         let nextButtonVisible;
         let moviesLength;
+        let pageCount = Number(this.props.location.search.substr(6));
 
-        if(this.props.location.search.substr(6) === '' || this.props.location.search.substr(6) === 0) {
+        if(pageCount === 0) {
+            moviesLength = <Redirect to={`/Search/${this.props.match.params.name}?page=1`} />
+            } else if(this.props.location.search.substr(6) === '' || this.props.location.search.substr(6) === 0) {
             moviesLength = <Redirect to={`/Search/${this.props.match.params.name}?page=1`} />
             } else if (count === 0 && this.props.location.search.substr(6) === '' ) {
             moviesLength = <Redirect to={`/Search/${this.props.match.params.name}?page=1`} />
@@ -126,6 +136,9 @@ class Search extends Component {
                                 } 
                                 />                    
                                 <p className="poster__title">{MOVIE.title}</p>
+                                <Box style={{textAlign: 'center'}}>
+                                <StyledRating name="half-rating" value={MOVIE.vote_average/2} precision={0.25} readOnly/>
+                                </Box>
                                 </Link>
                                 </div>
                             </Fade>                                              

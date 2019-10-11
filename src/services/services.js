@@ -1,11 +1,5 @@
-const API_KEY = "e8146f65b965e0a1cb0600c774f8a2a6";
+import {API_KEY} from '../services/ignore_this'
 
-// fetching popular
-export const popular_movie = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=`;
-// fetching top rated
-export const toprated_movie = `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language=en-US&page=`;
-// fetching upcoming movies
-export const upcoming_movie = `https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}&language=en-US&page=`;
 
 // BASIC URLS
 // UPCOMING
@@ -30,11 +24,12 @@ export const FILLER_GENRES_NAVBUTTON_SORT_URL = `&include_adult=false&include_vi
 export const END_GENRES_SORT_URL = `&with_genres=`;
 
 // SEARCH FETCHING PARAMS
-export const BASIC_SEARCH_URL = `https://api.themoviedb.org/3/search/movie?api_key=e8146f65b965e0a1cb0600c774f8a2a6&language=en-US&query=`
+export const BASIC_SEARCH_URL = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&query=`
 
 export const BASIC_SEARCH_PAGE = `&page=`;
 
 export const BASIC_SEARCH_END = `&include_adult=false`;
+
 
 /*
 sortChangeTitleAsc = async () => {
