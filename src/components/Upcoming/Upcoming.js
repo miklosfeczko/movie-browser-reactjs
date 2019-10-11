@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {Link, Redirect} from 'react-router-dom'
 import { Fade } from "react-reveal";
+import placeholderImg from "../../placeholder.jpg";
 import {upcoming_movie} from '../../services/services'
 import {BASIC_UPCOMING_URL} from '../../services/services'
 
@@ -12,33 +13,37 @@ class Upcoming extends Component {
 
     state = {
         MOVIES: [],
-        total: '',
-        loading: true
+        total: ''
     }
     
    componentDidMount = async() => {
+        if (count !== 0) {
         const MOVIE_RESULTS = await fetch(`${upcoming_movie}${count}`);
         const DATA = await MOVIE_RESULTS.json();
         this.setState({ 
             MOVIES:DATA.results,
             total: DATA.total_pages
-        });
+        })};
     }
 
     fetchMovies() {
         count = Number(this.props.location.search.substr(6));
+        if (count !== 0) {
         fetch(`${upcoming_movie}${count}`)
         .then(response => response.json())
         .then(DATA => this.setState({ 
                             MOVIES: DATA.results
-        }))
-        console.log(count)
+        }))}
+        else if (count === 0) {
+            count = 1;        
+        }
     }
 
     componentDidUpdate() {
         //////// OLD //////// if (Number(this.props.location.search.substr(6)) !== count && Number(this.props.location.search.substr(6)) !== 0)
         if (Number(this.props.location.search.substr(6)) !== count) {
-          this.fetchMovies()   
+          this.fetchMovies()
+          count = Number(this.props.location.search.substr(6));     
         } else return   
   }
 
@@ -64,28 +69,23 @@ class Upcoming extends Component {
         } else return
     }
 
-    handleLoader () {
-        this.timeout = setTimeout(() => this.setState({ loading: false }), 500);
-    }
-    
-    componentWillUnmount() {
-        clearTimeout(this.timeout)
-    }
 
     render() { 
         let backButtonVisible;
         let nextButtonVisible;
         let moviesLength;
         
-        if (count === 0) {
-        moviesLength = <Redirect to={`/Upcoming/?page=1`} />
-        } else if (this.state.total !== '' && this.state.total < this.props.location.search.substr(6)) {
-        moviesLength = <Redirect to={`/404`} />
-        } else if (count < 0) {
-        moviesLength = <Redirect to={`/404`} />
-        } else if (this.state.total === undefined) {
+        if(this.props.location.search.substr(6) === '' || this.props.location.search.substr(6) === 0) {
+            moviesLength = <Redirect to={`/Upcoming/?page=1`} />
+            } else if (count === 0 && this.props.location.search.substr(6) === '' ) {
+            moviesLength = <Redirect to={`/Upcoming/?page=1`} />
+            } else if (this.state.total !== '' && this.state.total < this.props.location.search.substr(6)) {
             moviesLength = <Redirect to={`/404`} />
-        }
+            } else if (count < 0) {
+            moviesLength = <Redirect to={`/404`} />
+            } else if (this.state.total === undefined && count === 1 && this.props.location.search.substr(6) === '') {
+            moviesLength = <Redirect to={`/404`} />
+            } 
         
         if (count === 1) {
             backButtonVisible = <button style={{float: 'left', display: 'none'}} onClick={this.backPage}>Back</button>
@@ -97,11 +97,7 @@ class Upcoming extends Component {
         } else { nextButtonVisible = <button className="bottom__button__margin__right" onClick={this.nextPage}>Next</button>
         }
 
-        if (this.state.loading) {
-            nextButtonVisible = <button style={{display: 'none'}} className="bottom__button__margin__right" onClick={this.nextPage}>Next</button>
-            backButtonVisible = <button style={{float: 'left', display: 'none'}} onClick={this.backPage}>Back</button>
-        }
-
+    
         return (
             <React.Fragment>
            {moviesLength}
@@ -115,7 +111,7 @@ class Upcoming extends Component {
             <div className="bottom__container">
                 <div className="main__container">
                 {this.state.MOVIES && this.state.MOVIES.map((MOVIE) => {
-                    if(this.state.MOVIES && !this.state.loading) {
+                    
                     return(
                         
                             <Fade key={MOVIE.id}>
@@ -128,8 +124,9 @@ class Upcoming extends Component {
                                 }}>                      
                                 <img
                                 alt={MOVIE.title}
-                                src={    
-                                    `https://image.tmdb.org/t/p/original${MOVIE.poster_path}`                                  
+                                src={MOVIE.poster_path
+                                    ? `https://image.tmdb.org/t/p/original${MOVIE.poster_path}`
+                                    : placeholderImg                                  
                                 } 
                                 />
                                 <p className="poster__title">{MOVIE.title}</p>   
@@ -137,11 +134,7 @@ class Upcoming extends Component {
                             </div> 
                             </Fade>
                                           
-                    )} else return (
-                        <div key={MOVIE.id}>
-                        {this.handleLoader()}
-                        </div>
-                    )
+                    ) 
                 })}
                  </div>
                  <Link

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {Link, Redirect} from 'react-router-dom'
 import { Fade } from "react-reveal";
+import placeholderImg from "../../placeholder.jpg";
 import {BASIC_GENRES_SORT_URL, FILLER_GENRES_SORT_URL, 
         END_GENRES_SORT_URL, FILLER_GENRES_NAVBUTTON_SORT_URL} from '../../services/services'
 
@@ -10,26 +11,27 @@ let sort = 'popularity.desc';
 class Genres extends Component {
     state = {
         MOVIES: [],
-        total: '',
-        loading: true
+        total: ''
     }
     
     componentDidMount = async () => {
+        if (count !== 0) {
         const MOVIE_RESULTS = await fetch(`${BASIC_GENRES_SORT_URL}${sort}${FILLER_GENRES_SORT_URL}${count}${END_GENRES_SORT_URL}${this.props.match.params.name}`);
         const DATA = await MOVIE_RESULTS.json();
         this.setState({ 
             MOVIES: DATA.results,
             total: DATA.total_pages
-         });
+         })};
     }
 
     fetchMovies() {
         count = Number(this.props.location.search.substr(6));
+        if (count !== 0) {
         fetch(`${BASIC_GENRES_SORT_URL}${sort}${FILLER_GENRES_SORT_URL}${count}${END_GENRES_SORT_URL}${this.props.match.params.name}`)
         .then(response => response.json())
         .then(DATA => this.setState({ 
                             MOVIES: DATA.results
-        }))
+        }))}
     }
 
    componentDidUpdate(prevProps) {
@@ -62,13 +64,6 @@ class Genres extends Component {
         } else return
     }
 
-    handleLoader () {
-        this.timeout = setTimeout(() => this.setState({ loading: false }), 500);
-    }
-    
-    componentWillUnmount() {
-        clearTimeout(this.timeout)
-    }
   
     render() {
         let genre;
@@ -76,15 +71,18 @@ class Genres extends Component {
         let nextButtonVisible;
         let moviesLength;
 
-        if (count === 0) {
+        if(this.props.location.search.substr(6) === '' || this.props.location.search.substr(6) === 0) {
+            moviesLength = <Redirect to={`/Genres/${this.props.match.params.name}?page=1`} />
+            } else if (count === 0 && this.props.location.search.substr(6) === '' ) {
             moviesLength = <Redirect to={`/Genres/${this.props.match.params.name}?page=1`} />
             } else if (this.state.total !== '' && this.state.total < this.props.location.search.substr(6)) {
             moviesLength = <Redirect to={`/404`} />
             } else if (count < 0) {
             moviesLength = <Redirect to={`/404`} />
-            } else if (this.state.total === undefined) {
+            } else if (this.state.total === undefined && count === 1 && this.props.location.search.substr(6) === '') {
             moviesLength = <Redirect to={`/404`} />
-        }
+        } 
+        
 
         if (count === 1) {
             backButtonVisible = <button style={{float: 'left', display: 'none'}} onClick={this.backPage}>Back</button>
@@ -96,10 +94,6 @@ class Genres extends Component {
         } else { nextButtonVisible = <button className="bottom__button__margin__right" onClick={this.nextPage}>Next</button>
         }
 
-        if (this.state.loading) {
-            nextButtonVisible = <button style={{display: 'none'}} className="bottom__button__margin__right" onClick={this.nextPage}>Next</button>
-            backButtonVisible = <button style={{float: 'left', display: 'none'}} onClick={this.backPage}>Back</button>
-        }
 
         switch(this.props.match.params.name) {
             case '28': genre = 'Action';
@@ -156,7 +150,7 @@ class Genres extends Component {
             <div className="bottom__container">  
             <div className="main__container">
                 {this.state.MOVIES && this.state.MOVIES.map((MOVIE) => {
-                     if(this.state.MOVIES && !this.state.loading) {
+                    
                     return(
                         <Fade key={MOVIE.id}>
                         <div className="poster__item">
@@ -168,18 +162,15 @@ class Genres extends Component {
                                     }}>
                                 <img
                                 alt={MOVIE.title}
-                                src={    
-                                    `https://image.tmdb.org/t/p/original${MOVIE.poster_path}`                                  
+                                src={MOVIE.poster_path
+                                    ? `https://image.tmdb.org/t/p/original${MOVIE.poster_path}`
+                                    : placeholderImg                                  
                                 } 
                                 />                    
                                 <p className="poster__title">{MOVIE.title}</p>
                                 </Link>
                                 </div>
                         </Fade>
-                    )} else return (
-                        <div key={MOVIE.id}>
-                        {this.handleLoader()}
-                        </div> 
                     )
                 })}
                 </div>

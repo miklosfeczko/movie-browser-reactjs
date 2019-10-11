@@ -13,31 +13,36 @@ class Toprated extends Component {
 
     state = {
         MOVIES: [],
-        total: '',
-        loading: true
+        total: ''
     }
     
     componentDidMount = async() => {
+            if (count !== 0) {
             const MOVIE_RESULTS = await fetch(`${toprated_movie}${count}`);
             const DATA = await MOVIE_RESULTS.json();
             this.setState({ 
                 MOVIES:DATA.results,
                 total: DATA.total_pages
-        });
+        })};
     }
 
     fetchMovies() {
         count = Number(this.props.location.search.substr(6));
+        if (count !== 0) {
         fetch(`${toprated_movie}${count}`)
         .then(response => response.json())
         .then(DATA => this.setState({ 
                             MOVIES: DATA.results
-        }))
+        }))}
+        else if (count === 0) {
+            count = 1;        
+        }
     }
 
     componentDidUpdate() {
         if (Number(this.props.location.search.substr(6)) !== count) {
-          this.fetchMovies()   
+          this.fetchMovies()
+          count = Number(this.props.location.search.substr(6));   
         } else return   
   }
 
@@ -63,28 +68,23 @@ class Toprated extends Component {
         } else return
     }
 
-    handleLoader () {
-        this.timeout = setTimeout(() => this.setState({ loading: false }), 500);
-    }
-    
-    componentWillUnmount() {
-        clearTimeout(this.timeout);
-    }
     
     render() {
         let backButtonVisible;
         let nextButtonVisible;
         let moviesLength;
 
-        if (count === 0) {
+       if(this.props.location.search.substr(6) === '' || this.props.location.search.substr(6) === 0) {
+            moviesLength = <Redirect to={`/Toprated/?page=1`} />
+            } else if (count === 0 && this.props.location.search.substr(6) === '' ) {
             moviesLength = <Redirect to={`/Toprated/?page=1`} />
             } else if (this.state.total !== '' && this.state.total < this.props.location.search.substr(6)) {
             moviesLength = <Redirect to={`/404`} />
             } else if (count < 0) {
             moviesLength = <Redirect to={`/404`} />
-            } else if (this.state.total === undefined) {
-                moviesLength = <Redirect to={`/404`} />
-            }
+            } else if (this.state.total === undefined && count === 1 && this.props.location.search.substr(6) === '') {
+            moviesLength = <Redirect to={`/404`} />
+            } 
 
         if (count === 1) {
             backButtonVisible = <button style={{float: 'left', display: 'none'}} onClick={this.backPage}>Back</button>
@@ -110,7 +110,7 @@ class Toprated extends Component {
             <div className="bottom__container">
                 <div className="main__container">
             {this.state.MOVIES && this.state.MOVIES.map((MOVIE) => {
-                if(this.state.MOVIES && !this.state.loading) {
+                
                 return(
                         <Fade key={MOVIE.id}>
                         <div className="poster__item">
@@ -131,12 +131,8 @@ class Toprated extends Component {
                                 </Link>
                         </div>
                         </Fade>             
-                   )}
-                   else return (
-                        <div key={MOVIE.id}>
-                        {this.handleLoader()}
-                        </div>
-                   )
+                   )            
+                   
             })}
                 </div>
                  <Link

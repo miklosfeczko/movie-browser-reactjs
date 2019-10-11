@@ -11,28 +11,29 @@ class Search extends Component {
         super(props);
         this.state = {
           MOVIES: [],
-          total: '',
-          loading: true
+          total: ''
         }
     }
 
     componentDidMount = async () => {
+        if (count !== 0) {
         const MOVIE_RESULTS = await fetch(`${BASIC_SEARCH_URL}${this.props.match.params.name}${BASIC_SEARCH_PAGE}${count}${BASIC_SEARCH_END}`);
         const DATA = await MOVIE_RESULTS.json();
         this.setState({ 
             MOVIES: DATA.results,
             total: DATA.total_pages
-         });
+         })};
     }
     
     fetchMovies() {
         count = Number(this.props.location.search.substr(6)); // setting default value after search is submitted.
+        if (count !== 0) {
         fetch(`${BASIC_SEARCH_URL}${this.props.match.params.name}${BASIC_SEARCH_PAGE}${count}${BASIC_SEARCH_END}`)
           .then(response => response.json())
           .then(DATA => this.setState({ 
                                         MOVIES: DATA.results,
                                         total: DATA.total_pages
-        }))
+        }))}
     }
 
     componentDidUpdate(prevProps) {
@@ -64,29 +65,24 @@ class Search extends Component {
         .then(DATA => this.setState({ MOVIES: DATA.results }))
         } else return
     }
-
-    handleLoader () {
-        this.timeout = setTimeout(() => this.setState({ loading: false }), 500);
-    }
-    
-    componentWillUnmount() {
-        clearTimeout(this.timeout)
-    }
     
     render() {
         let backButtonVisible;
         let nextButtonVisible;
         let moviesLength;
 
-        if (count === 0) {
+        if(this.props.location.search.substr(6) === '' || this.props.location.search.substr(6) === 0) {
+            moviesLength = <Redirect to={`/Search/${this.props.match.params.name}?page=1`} />
+            } else if (count === 0 && this.props.location.search.substr(6) === '' ) {
             moviesLength = <Redirect to={`/Search/${this.props.match.params.name}?page=1`} />
             } else if (this.state.total !== '' && this.state.total < this.props.location.search.substr(6)) {
             moviesLength = <Redirect to={`/404`} />
             } else if (count < 0) {
             moviesLength = <Redirect to={`/404`} />
-            } else if (this.state.total === undefined) {
+            } else if (this.state.total === undefined && count === 1 && this.props.location.search.substr(6) === '') {
             moviesLength = <Redirect to={`/404`} />
-        }
+        } 
+
 
         if (count === 1) {
             backButtonVisible = <button style={{float: 'left', display: 'none'}} onClick={this.backPage}>Back</button>
@@ -98,10 +94,6 @@ class Search extends Component {
         } else { nextButtonVisible = <button className="bottom__button__margin__right" onClick={this.nextPage}>Next</button>
         }
 
-        if (this.state.loading) {
-            nextButtonVisible = <button style={{display: 'none'}} className="bottom__button__margin__right" onClick={this.nextPage}>Next</button>
-            backButtonVisible = <button style={{float: 'left', display: 'none'}} onClick={this.backPage}>Back</button>
-        }
 
         return (
             <React.Fragment>
@@ -116,7 +108,7 @@ class Search extends Component {
             <div className="bottom__container">  
             <div className="main__container">
                 {this.state.MOVIES && this.state.MOVIES.map((MOVIE) => {
-                    if(this.state.MOVIES && !this.state.loading) {
+                   
                     return(
                             <Fade key={MOVIE.id}>
                                 <div className="poster__item">
@@ -137,11 +129,7 @@ class Search extends Component {
                                 </Link>
                                 </div>
                             </Fade>                                              
-                    )} else return (
-                        <div key={MOVIE.id}>
-                        {this.handleLoader()}
-                        </div> 
-                    )
+                    ) 
                 })}
             </div>
             <Link
