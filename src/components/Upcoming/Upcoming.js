@@ -80,6 +80,7 @@ class Upcoming extends Component {
         let nextButtonVisible;
         let moviesLength;
         let pageCount = Number(this.props.location.search.substr(6));
+
         
         if(pageCount === 0) {
             moviesLength = <Redirect to={`/Upcoming/?page=1`} />
@@ -128,7 +129,11 @@ class Upcoming extends Component {
                                 style={{textDecoration: 'none'}} 
                                 key={MOVIE.id} 
                                 to={{
-                                    pathname: `/Movie/${MOVIE.id}`                      
+                                    pathname: `/Movie/${MOVIE.id}`,
+                                    state: {
+                                        backButton: true,
+                                        history: this.props.location
+                                    }                
                                 }}>                      
                                 <img
                                 alt={MOVIE.title}

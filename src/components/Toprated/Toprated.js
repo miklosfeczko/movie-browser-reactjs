@@ -126,7 +126,11 @@ class Toprated extends Component {
                                 style={{textDecoration: 'none'}}
                                 key={MOVIE.id} 
                                 to={{
-                                        pathname: `/Movie/${MOVIE.id}`                      
+                                        pathname: `/Movie/${MOVIE.id}`,
+                                        state: {
+                                            backButton: true,
+                                            history: this.props.location
+                                        }                      
                                 }}>                 
                                 <img
                                 alt={MOVIE.title}

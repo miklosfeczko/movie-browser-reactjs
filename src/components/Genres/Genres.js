@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {Link, Redirect} from 'react-router-dom'
 import { Fade } from "react-reveal";
 import Box from '@material-ui/core/Box';
+import Select from 'react-select'
 import placeholderImg from "../../placeholder.jpg";
 import '../Popular/Popular.scss'
 import {BASIC_GENRES_SORT_URL, FILLER_GENRES_SORT_URL, 
@@ -168,7 +169,11 @@ class Genres extends Component {
                                     style={{ textDecoration: 'none'}}
                                     key={MOVIE.id} 
                                     to={{
-                                     pathname: `/Movie/${MOVIE.id}`                      
+                                     pathname: `/Movie/${MOVIE.id}`,
+                                     state: {
+                                         backButton: true,
+                                         history: this.props.location
+                                        }                      
                                     }}>
                                 <img
                                 alt={MOVIE.title}

@@ -6,3 +6,46 @@
     padding: 0;
     font-family: 'Montserrat', sans-serif;
 }
+
+// LOADING ANIMATION
+
+@keyframes loadingIndicator {
+    0%, 100% {
+      transform: scale(0);
+    }
+    75% {
+      transform: scale(1);
+    }
+  }
+  
+  .loading-indicator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+  
+    width: 80px;
+    height: 80px;
+  
+    .circle {
+      position: absolute;
+      left: 0;
+      top: 0;
+      border-radius: 50%;
+      width: 100%;
+      height: 100%;
+      opacity: 0.5;
+      background-color: $darkteal;
+      animation: loadingIndicator 2.25s infinite ease-in-out;
+    }
+  
+    .circle-2 {
+      animation-delay: -.75s;
+    }
+  
+    .circle-3 {
+      animation-delay: -1.5s;
+    }
+  }

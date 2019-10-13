@@ -80,6 +80,7 @@ class Popular extends Component {
         let nextButtonVisible;
         let moviesLength;
         let pageCount = Number(this.props.location.search.substr(6));
+        console.log(this.props)
        
         if(pageCount === 0) {
             moviesLength = <Redirect to={`/Popular/?page=1`} />
@@ -123,11 +124,15 @@ class Popular extends Component {
                     return(
                                 <Fade key={MOVIE.id}>
                                 <div className="poster__item">
-                                <Link 
+                                <Link
                                     style={{ textDecoration: 'none'}}
                                     key={MOVIE.id} 
                                     to={{
-                                     pathname: `/Movie/${MOVIE.id}`                      
+                                     pathname: `/Movie/${MOVIE.id}`,
+                                     state: {
+                                         backButton: true,
+                                         history: this.props.location
+                                        }                      
                                     }}>
                                 <img
                                 alt={MOVIE.title}

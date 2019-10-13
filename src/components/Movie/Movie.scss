@@ -1,4 +1,5 @@
 @import "../../utils/variables";
+@import 'node_modules/react-modal-video/scss/modal-video.scss';
 
 .wrapper {
     //background-color: blue;
@@ -71,7 +72,53 @@
         font-weight: bold;
         font-size: 0.9rem;
     }
+    
+    .trailer__button { 
+        cursor: pointer;
+        color: $darkteal;
+        background-color: white;
+        border: 1px solid $darkteal;
+        display: inline-block;
+        justify-content: space-around;
+        padding: 0.7rem 2.5rem;
+        border-radius: 5rem;
+        line-height: 1;
+        font-weight: 500;
+        font-size: 0.9rem;
+        width: auto;
+        transition: all 0.1s linear;
+        -moz-transition: all 0.1s linear;
+	    -webkit-transition: all 0.1s linear;
+	    -o-transition: all 0.1s linear;
+        -ms-transition: all 0.1s linear;
+        &:hover {
+            color: white;
+            background-color: $darkteal;
+            border: 1px solid white;
+            transition: all 0.1s linear;
+            transition: all 0.1s linear;
+            -moz-transition: all 0.1s linear;
+	        -webkit-transition: all 0.1s linear;
+	        -o-transition: all 0.1s linear;
+	        -ms-transition: all 0.1s linear;
+        }
+        &:focus {
+            outline: 0;
+        }
+    }
 }
+
+#inversed {
+    color: white;
+    background-color: $darkteal;
+    border: 1px solid $darkteal;
+    &:hover {
+        color: $darkteal;
+        background-color: white;
+        border: 1px solid $darkteal;
+    }
+}
+
 
 .header__wrapper {
     font-size: 2.5rem;
@@ -87,6 +134,7 @@
     display: flex;
     align-items: left;
     justify-content: left;
+    margin-bottom: 1rem;
     img {
         width: 4rem;
         margin-right: 1rem;
@@ -156,6 +204,15 @@
         img {
             width: 2.5rem;
             height: 2.5rem;
+            margin-right: 1rem;
+        }
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    .link__wrapper {
+        img {
+            margin-right: 0.6rem;
         }
     }
 }
