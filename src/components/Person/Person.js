@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+import { Fade } from "react-reveal";
+import placeholderImg from "../../placeholderPerson.jpg";
+import '../Movie/Movie.scss'
 
 class Person extends Component {
 
@@ -18,8 +21,35 @@ class Person extends Component {
 
     render() {
         return (
-            <div className="main__container">
-                {this.state.PERSON.biography}
+            <div className="wrapper">
+            <Fade>
+            <div className="movie__wrapper">
+                    <div className="image__wrapper">
+                        <img
+                        alt={this.state.PERSON.id} 
+                        src={
+                        this.state.PERSON.profile_path 
+                        ? `https://image.tmdb.org/t/p/original${this.state.PERSON.profile_path}` 
+                        : placeholderImg
+                        }/>
+                    </div>
+                    
+                <div className="movie__details">
+                    <h1 className="header__wrapper">
+                    <p>{this.state.PERSON.name}</p>
+                    </h1>
+
+                    <h4>BirthDay
+                        <br/>
+                        <span style={{display: 'inline-block', marginTop: '0.5rem', color: '#546e7a'}}>{this.state.PERSON.birthday}</span>
+                    </h4>
+                    
+                    <h4>Biography</h4>
+                    <article>{this.state.PERSON.biography}</article>
+            
+                </div>
+            </div>
+            </Fade>
             </div>
         )
     }

@@ -97,32 +97,6 @@
     margin-right: 1.2rem;
 }
 
-@media only screen and (max-width: 1550px) {
-    .main__container {
-        margin-left: 16vw;
-        grid-template-columns: repeat(auto-fit, minmax(10rem, 16rem));
-    }
-
-    .poster__item {
-        width: 14rem;
-        .poster__title {
-            font-size: 80%;
-        }
-        img {
-            height: 22rem;
-        }
-    }
-
-    .bottom__container button {
-        margin-left: 16vw;
-        font-size: 0.8rem;
-    }
-
-    .left__title {
-        margin-left: 16vw;
-    }
-}
-
 
 @media only screen and (min-width: 2100px) {
     .main__container {
@@ -226,7 +200,33 @@
     .bottom__button__margin__right {
         margin-right: 1.2vw;
     }
-} 
+}
+
+@media only screen and (max-width: 1550px) {
+    .main__container {
+        margin-left: 16vw;
+        grid-template-columns: repeat(auto-fit, minmax(10rem, 16rem));
+    }
+
+    .poster__item {
+        width: 14rem;
+        .poster__title {
+            font-size: 80%;
+        }
+        img {
+            height: 22rem;
+        }
+    }
+
+    .bottom__container button {
+        margin-left: 16vw;
+        font-size: 0.8rem;
+    }
+
+    .left__title {
+        margin-left: 16vw;
+    }
+}
 
 @media only screen and (max-width: 1280px) {
     .main__container {

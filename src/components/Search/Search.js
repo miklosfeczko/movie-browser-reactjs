@@ -34,6 +34,7 @@ class Search extends Component {
     
     fetchMovies() {
         count = Number(this.props.location.search.substr(6)); // setting default value after search is submitted.
+        count = count || 0;
         if (count !== 0) {
         fetch(`${BASIC_SEARCH_URL}${this.props.match.params.name}${BASIC_SEARCH_PAGE}${count}${BASIC_SEARCH_END}`)
           .then(response => response.json())

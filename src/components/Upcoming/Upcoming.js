@@ -32,6 +32,7 @@ class Upcoming extends Component {
 
     fetchMovies() {
         count = Number(this.props.location.search.substr(6));
+        count = count || 0;
         if (count !== 0) {
         fetch(`${BASIC_UPCOMING_URL}${count}`)
         .then(response => response.json())

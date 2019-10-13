@@ -32,6 +32,7 @@ class Genres extends Component {
 
     fetchMovies() {
         count = Number(this.props.location.search.substr(6));
+        count = count || 0;
         if (count !== 0) {
         fetch(`${BASIC_GENRES_SORT_URL}${sort}${FILLER_GENRES_SORT_URL}${count}${END_GENRES_SORT_URL}${this.props.match.params.name}`)
         .then(response => response.json())

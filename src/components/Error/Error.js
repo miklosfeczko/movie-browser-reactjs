@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
+import './Error.scss'
 
 export default class Error extends Component {
     render() {
         return (
             <div>
-                Hello from Error component! NEM LÁTSZIK A SZÉLEEEE
+              
             </div>
         )
     }
