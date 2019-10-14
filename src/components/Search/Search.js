@@ -87,11 +87,11 @@ class Search extends Component {
             } else if (count === 0 && this.props.location.search.substr(6) === '' ) {
             moviesLength = <Redirect to={`/Search/${this.props.match.params.name}?page=1`} />
             } else if (this.state.total !== '' && this.state.total < this.props.location.search.substr(6)) {
-            moviesLength = <Redirect to={`/404`} />
+            moviesLength = <Redirect to={`/Search`} />
             } else if (count < 0) {
-            moviesLength = <Redirect to={`/404`} />
+            moviesLength = <Redirect to={`/Search`} />
             } else if (this.state.total === undefined && count === 1 && this.props.location.search.substr(6) === '') {
-            moviesLength = <Redirect to={`/404`} />
+            moviesLength = <Redirect to={`/Search`} />
         } 
 
 

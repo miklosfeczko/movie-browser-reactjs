@@ -17,7 +17,6 @@ class Person extends Component {
         const MOVIE_RESULTS = await fetch(`${BASIC_PERSON_URL}${id}${BASIC_PERSON_END_URL}`);
         const DATA = await MOVIE_RESULTS.json();
         this.setState({ PERSON: DATA });
-        console.log(this.state.PERSON.errors);
     }
 
     handleBackBtn = () => {
@@ -30,7 +29,6 @@ class Person extends Component {
         const loading = this.state;
         let personNameLoading = this.state.PERSON.name;
         personNameLoading = personNameLoading || 0;
-        
 
         if(!personNameLoading && loading && !this.state.PERSON.errors) { // Ha neem létezik az ember és tölt ( ami mindig igaz ) akkor töltőkép
             return (

@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import {Link} from 'react-router-dom'
-import Fade from 'react-reveal/Fade';
-import HeadShake from 'react-reveal/HeadShake';
-import placeholderImg from "../../placeholderNoPage.jpg";
+import { Fade } from "react-reveal";
 import {dummy} from '../../services/services'
-import './Error.scss'
+import placeholderImg from "../../placeholderNoPage.jpg";
+
 
 export default class Error extends Component {
     render() {
@@ -23,7 +22,7 @@ export default class Error extends Component {
                 
                 <div className="movie__details">
                     <h1 className="header__wrapper">
-                    <HeadShake><p>{dummy.errorName}</p></HeadShake>
+                    <p>{dummy.searchError}</p>
                     </h1>
                
                     <Link to={{ pathname: '/'}}>

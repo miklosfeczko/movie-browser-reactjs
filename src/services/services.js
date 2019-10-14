@@ -49,39 +49,7 @@ export const BASIC_MOVIE_POSTER_URL = `https://image.tmdb.org/t/p/original`;
 // dummy placeholder text
 export var dummy = {
     movieName : 'This movie does not exist.',
-    personName : 'This person does not exist.'
+    personName : 'This person does not exist.',
+    errorName : 'This Page Does not Exist',
+    searchError : 'No matched results'
 }
-
-/*
-sortChangeTitleAsc = async () => {
-    this.setState({ MOVIES: []})
-    sort = 'original_title.asc'
-    fetch(`${BASIC_GENRES_SORT_URL}${sort}${FILLER_GENRES_SORT_URL}${count}${END_GENRES_SORT_URL}${this.props.match.params.name}`)
-    .then(response => response.json())
-    .then(DATA => this.setState({ MOVIES: DATA.results }))
-}
-
-sortChangePopular = async () => {
-    this.setState({ MOVIES: []})
-    sort = 'popularity.desc'
-    fetch(`${BASIC_GENRES_SORT_URL}${sort}${FILLER_GENRES_SORT_URL}${count}${END_GENRES_SORT_URL}${this.props.match.params.name}`)
-    .then(response => response.json())
-    .then(DATA => this.setState({ MOVIES: DATA.results }))
-}
-
-sortChangeVoteAvg = async () => {
-    this.setState({ MOVIES: []})
-    sort = 'vote_average.desc'
-    fetch(`${BASIC_GENRES_SORT_URL}${sort}${FILLER_GENRES_SORT_URL}${count}${END_GENRES_SORT_URL}${this.props.match.params.name}`)
-    .then(response => response.json())
-    .then(DATA => this.setState({ MOVIES: DATA.results }))
-}
-
-sortChangeReleaseDate = async () => {
-    this.setState({ MOVIES: []})
-    sort = 'release_date.desc'
-    fetch(`${BASIC_GENRES_SORT_URL}${sort}${FILLER_GENRES_SORT_URL}${count}${END_GENRES_SORT_URL}${this.props.match.params.name}`)
-    .then(response => response.json())
-    .then(DATA => this.setState({ MOVIES: DATA.results }))
-}
-*/

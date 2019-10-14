@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ModalVideo from 'react-modal-video'
-import {Link, Redirect} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import { Fade } from "react-reveal";
 import Box from '@material-ui/core/Box';
 import {StyledRating} from '../../utils/StyledRating'
@@ -43,7 +43,6 @@ class Movie extends Component {
         const TRAILER_DATA = await TRAILER_RESULT.json();
         this.setState({ trailer: TRAILER_DATA.results })
 
-        console.log(this.state.MOVIE)
     }
 
     openModal () {
@@ -58,7 +57,6 @@ class Movie extends Component {
 
     render() {
     const loading = this.state;
-    console.log(this.props.location)
 
     if(!this.state.MOVIE.title && loading && !this.state.MOVIE.status_code) {
         return (
@@ -160,21 +158,46 @@ class Movie extends Component {
                     })}
                     </div>
                     
+                    <div className="trailer__container">
+                    {this.state.MOVIE.imdb_id
+                    ?  <a
+                            href={`https://www.imdb.com/title/${this.state.MOVIE.imdb_id}`}
+                            className="form__button"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            >
+                            <button className="trailer__button" onClick={this.handleBackBtn}>IMDb</button>
+                      </a>
+                    : ''
+                    }
+
+                    {this.state.MOVIE.homepage
+                    ? <a
+                            href={`${this.state.MOVIE.homepage}`}
+                            className="form__button"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            >
+                            <button className="trailer__button" onClick={this.handleBackBtn}>Website</button>
+                    </a>
+                    : ''
+                    }
+
                     {this.state.trailer && this.state.trailer.map((trailer, index) => {
                     if(index >= 1) return null;
                     
                     return(
-                        <div key={trailer.id}>
-                            <ModalVideo channel='youtube' isOpen={this.state.isOpen} videoId={trailer.key} onClose={() => this.setState({isOpen: false})} />
-                            <button className="trailer__button" style={{float: 'left', display: 'inline-block'}} onClick={this.openModal}>Trailer</button>
-                        </div>
+                        <React.Fragment key={trailer.id}>
+                            <ModalVideo channel='youtube' isOpen={this.state.isOpen} videoId={trailer.key} onClose={() => this.setState({isOpen: false})} />       
+                            <button className="trailer__button" onClick={this.openModal}>Trailer</button>
+                        </React.Fragment>
                     )
-                    
                     })}
-                    {this.props.location.state !== undefined
-                    ? <button className="trailer__button" id="inversed" style={{float: 'right', display: 'inline-block'}} onClick={this.handleBackBtn}>Back</button>
-                    : ''
-                    }
+                        {this.props.location.state !== undefined
+                            ? <button className="trailer__button" id="inversed" onClick={this.handleBackBtn}>Back</button>
+                            : ''
+                        }
+                   </div>
                 </div>
             </div>
             </div>

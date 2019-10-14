@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {Link, Redirect} from 'react-router-dom'
-import { Fade } from "react-reveal";
+import Fade from 'react-reveal/Fade';
 import Box from '@material-ui/core/Box';
 import placeholderImg from "../../placeholder.jpg";
 import {BASIC_POPULAR_URL} from '../../services/services'
@@ -14,7 +14,8 @@ class Popular extends Component {
 
     state = {
         MOVIES: [],
-        total: ''
+        total: '',
+        imgLoaded: false
     }
 
     componentDidMount = async() => {
@@ -55,7 +56,8 @@ class Popular extends Component {
     nextPage = async () => {
         if (count < this.state.total) {
         this.setState({
-            MOVIES: []
+            MOVIES: [],
+            imgLoaded: false
          })
         count = count+1;
         fetch(`${BASIC_POPULAR_URL}${count}`)
@@ -66,7 +68,10 @@ class Popular extends Component {
 
     backPage = async () => {
         if (count > 1) {
-        this.setState({ MOVIES: []})
+        this.setState({ 
+            MOVIES: [],
+            imgLoaded: false
+        })
         count = count-1;
         fetch(`${BASIC_POPULAR_URL}${count}`)
         .then(response => response.json())
@@ -80,7 +85,7 @@ class Popular extends Component {
         let nextButtonVisible;
         let moviesLength;
         let pageCount = Number(this.props.location.search.substr(6));
-        console.log(this.props)
+
        
         if(pageCount === 0) {
             moviesLength = <Redirect to={`/Popular/?page=1`} />
@@ -116,14 +121,14 @@ class Popular extends Component {
                 <span className="second__title">movies</span>
                 </p>
             </div>
-
+            <Fade when={this.state.imgLoaded}>
             <div className="bottom__container">  
             <div className="main__container">
                 {this.state.MOVIES && this.state.MOVIES.map((MOVIE) => {
                     
                     return(
-                                <Fade key={MOVIE.id}>
-                                <div className="poster__item">
+                                
+                                <div className="poster__item"  key={MOVIE.id}>
                                 <Link
                                     style={{ textDecoration: 'none'}}
                                     key={MOVIE.id} 
@@ -139,6 +144,10 @@ class Popular extends Component {
                                 src={MOVIE.poster_path
                                    ? `https://image.tmdb.org/t/p/original${MOVIE.poster_path}`     
                                    : placeholderImg                             
+                                }
+                                onLoad={() => this.setState({
+                                    imgLoaded: true
+                                })
                                 } 
                                 />                    
                                 <p className="poster__title">{MOVIE.title}</p>
@@ -147,7 +156,7 @@ class Popular extends Component {
                                 </Box>
                                 </Link>
                                 </div>
-                                </Fade>
+                                
                                                                          
                     )             
                 })}
@@ -159,6 +168,7 @@ class Popular extends Component {
                 to={`?page=${count+1}`}
                 >{nextButtonVisible}</Link>    
             </div>
+            </Fade>
             </React.Fragment>
         )
     }

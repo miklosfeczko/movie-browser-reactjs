@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import {Link, Redirect} from 'react-router-dom'
 import { Fade } from "react-reveal";
 import Box from '@material-ui/core/Box';
-import Select from 'react-select'
 import placeholderImg from "../../placeholder.jpg";
 import '../Popular/Popular.scss'
 import {BASIC_GENRES_SORT_URL, FILLER_GENRES_SORT_URL, 
@@ -79,6 +78,7 @@ class Genres extends Component {
         let nextButtonVisible;
         let moviesLength;
         let pageCount = Number(this.props.location.search.substr(6));
+
 
         if(pageCount === 0) {
             moviesLength = <Redirect to={`/Genres/${this.props.match.params.name}?page=1`} />
@@ -205,8 +205,3 @@ class Genres extends Component {
 }
 
 export default Genres;
-
-/*  <button onClick={this.sortChangeTitleAsc}>Sort Title Asc</button>
-                <button onClick={this.sortChangePopular}>Sort Popular</button>
-                <button onClick={this.sortChangeVoteAvg}>Sort Vote Avg</button>
-                <button onClick={this.sortChangeReleaseDate}>Sort Release Date</button> */

@@ -78,19 +78,20 @@
         color: $darkteal;
         background-color: white;
         border: 1px solid $darkteal;
-        display: inline-block;
         justify-content: space-around;
-        padding: 0.7rem 2.5rem;
+        padding: 0.7rem 2.4rem;
         border-radius: 5rem;
         line-height: 1;
         font-weight: 500;
-        font-size: 0.9rem;
+        font-size: 0.8rem;
         width: auto;
         transition: all 0.1s linear;
         -moz-transition: all 0.1s linear;
 	    -webkit-transition: all 0.1s linear;
 	    -o-transition: all 0.1s linear;
         -ms-transition: all 0.1s linear;
+        margin-right: 0.9rem;
+        float: left;
         &:hover {
             color: white;
             background-color: $darkteal;
@@ -109,6 +110,8 @@
 }
 
 #inversed {
+    margin-right: 0rem;
+    float: right;
     color: white;
     background-color: $darkteal;
     border: 1px solid $darkteal;
@@ -169,8 +172,11 @@
 
     .movie__details {
         margin-top: 4rem;
+        .trailer__button { 
+            font-size: 0.7rem;
+            padding: 0.7rem 2rem;
+        }
     }
-
 }
 
 @media only screen and (max-width: 900px) {
@@ -207,12 +213,35 @@
             margin-right: 1rem;
         }
     }
+    .movie__details {
+        .trailer__button {
+            padding: 0.5rem 1.6rem;
+        }
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .trailer__container {
+        float: none;
+        display: inline-block;
+    }
+    #inversed {
+       margin-top: 2.5rem;
+       float: none;
+       display: block;
+       clear: both;
+    }
 }
 
 @media only screen and (max-width: 320px) {
     .link__wrapper {
         img {
             margin-right: 0.6rem;
+        }
+    }
+    .movie__details {
+        .trailer__button {
+            padding: 0.4rem 1.2rem;
         }
     }
 }
