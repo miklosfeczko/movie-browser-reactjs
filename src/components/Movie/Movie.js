@@ -39,7 +39,7 @@ class Movie extends Component {
         const CAST_DATA = await CAST_RESULTS.json();
         this.setState({ CAST: CAST_DATA.cast })
 
-        const TRAILER_RESULT = await fetch(`http://api.themoviedb.org/3/movie/${id}/videos?api_key=e8146f65b965e0a1cb0600c774f8a2a6`)
+        const TRAILER_RESULT = await fetch(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=e8146f65b965e0a1cb0600c774f8a2a6`)
         const TRAILER_DATA = await TRAILER_RESULT.json();
         this.setState({ trailer: TRAILER_DATA.results })
 
