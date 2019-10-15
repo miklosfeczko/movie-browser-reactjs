@@ -14,8 +14,7 @@ class Popular extends Component {
 
     state = {
         MOVIES: [],
-        total: '',
-        imgLoaded: false
+        total: ''
     }
 
     componentDidMount = async() => {
@@ -55,10 +54,7 @@ class Popular extends Component {
 
     nextPage = async () => {
         if (count < this.state.total) {
-        this.setState({
-            MOVIES: [],
-            imgLoaded: false
-         })
+        this.setState({ MOVIES: [] })
         count = count+1;
         fetch(`${BASIC_POPULAR_URL}${count}`)
         .then(response => response.json())
@@ -68,10 +64,7 @@ class Popular extends Component {
 
     backPage = async () => {
         if (count > 1) {
-        this.setState({ 
-            MOVIES: [],
-            imgLoaded: false
-        })
+        this.setState({ MOVIES: [] })
         count = count-1;
         fetch(`${BASIC_POPULAR_URL}${count}`)
         .then(response => response.json())
@@ -121,14 +114,14 @@ class Popular extends Component {
                 <span className="second__title">movies</span>
                 </p>
             </div>
-            <Fade when={this.state.imgLoaded}>
+            
             <div className="bottom__container">  
             <div className="main__container">
                 {this.state.MOVIES && this.state.MOVIES.map((MOVIE) => {
                     
                     return(
-                                
-                                <div className="poster__item"  key={MOVIE.id}>
+                                <Fade key={MOVIE.id}>
+                                <div className="poster__item">
                                 <Link
                                     style={{ textDecoration: 'none'}}
                                     key={MOVIE.id} 
@@ -145,10 +138,6 @@ class Popular extends Component {
                                    ? `https://image.tmdb.org/t/p/original${MOVIE.poster_path}`     
                                    : placeholderImg                             
                                 }
-                                onLoad={() => this.setState({
-                                    imgLoaded: true
-                                })
-                                } 
                                 />                    
                                 <p className="poster__title">{MOVIE.title}</p>
                                 <Box style={{textAlign: 'center'}}>
@@ -156,7 +145,7 @@ class Popular extends Component {
                                 </Box>
                                 </Link>
                                 </div>
-                                
+                                </Fade>
                                                                          
                     )             
                 })}
@@ -168,7 +157,7 @@ class Popular extends Component {
                 to={`?page=${count+1}`}
                 >{nextButtonVisible}</Link>    
             </div>
-            </Fade>
+            
             </React.Fragment>
         )
     }
