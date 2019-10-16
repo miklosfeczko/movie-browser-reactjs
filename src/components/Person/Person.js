@@ -3,6 +3,9 @@ import { Fade } from "react-reveal";
 import placeholderImg from "../../placeholderPerson.jpg";
 import '../Movie/Movie.scss'
 import {BASIC_PERSON_URL, BASIC_PERSON_END_URL, BASIC_PERSON_PICTURE_URL, dummy} from '../../services/services'
+import PersonMovies from '../PersonMovies/PersonMovies'
+
+let id;
 
 class Person extends Component {
 
@@ -13,7 +16,7 @@ class Person extends Component {
     
     componentDidMount = async() => {
         // const id = this.props.location.state.id;
-        const id = this.props.match.params.name
+        id = this.props.match.params.name
         const MOVIE_RESULTS = await fetch(`${BASIC_PERSON_URL}${id}${BASIC_PERSON_END_URL}`);
         const DATA = await MOVIE_RESULTS.json();
         this.setState({ PERSON: DATA });
@@ -30,6 +33,7 @@ class Person extends Component {
         let personNameLoading = this.state.PERSON.name;
         personNameLoading = personNameLoading || 0;
 
+
         if(!personNameLoading && loading && !this.state.PERSON.errors) { // Ha neem létezik az ember és tölt ( ami mindig igaz ) akkor töltőkép
             return (
               <div>
@@ -45,6 +49,7 @@ class Person extends Component {
         }
 
         return (
+            <React.Fragment>
             <div className="wrapper">
            
             <div className="movie__wrapper">
@@ -84,6 +89,8 @@ class Person extends Component {
                 </div>
             </div>
             </div>
+            <PersonMovies id={id} url={this.props.match.url}/>
+            </React.Fragment>
         )
     }
 }

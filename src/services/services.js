@@ -35,7 +35,7 @@ export const BASIC_PERSON_URL = `https://api.themoviedb.org/3/person/`;
 
 export const BASIC_PERSON_END_URL = `?api_key=${API_KEY}&language=en-US`;
 
-export const BASIC_PERSON_PICTURE_URL = `https://image.tmdb.org/t/p/original`
+export const BASIC_PERSON_PICTURE_URL = `https://image.tmdb.org/t/p/w342`
 
 // MOVIE DETAILS FETCHING
 export const BASIC_MOVIE_URL = `https://api.themoviedb.org/3/movie/`
@@ -44,7 +44,7 @@ export const BASIC_MOVIE_END_URL = `?api_key=${API_KEY}&language=en-US`
 
 export const BASIC_MOVIE_CAST_END_URL = `/credits?api_key=${API_KEY}`
 
-export const BASIC_MOVIE_POSTER_URL = `https://image.tmdb.org/t/p/original`;
+export const BASIC_MOVIE_POSTER_URL = `https://image.tmdb.org/t/p/w500`;
 
 // dummy placeholder text
 export var dummy = {
@@ -53,3 +53,4 @@ export var dummy = {
     errorName : 'This Page Does not Exist',
     searchError : 'No matched results'
 }
+

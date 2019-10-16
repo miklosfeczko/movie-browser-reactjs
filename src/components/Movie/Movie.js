@@ -7,6 +7,7 @@ import {StyledRating} from '../../utils/StyledRating'
 import placeholderImg from "../../placeholder.jpg";
 import placeholderCast from '../../placeholderRiddle.jpg'
 import {BASIC_MOVIE_URL, BASIC_MOVIE_END_URL, BASIC_MOVIE_CAST_END_URL, dummy, BASIC_MOVIE_POSTER_URL} from '../../services/services'
+import Recommended from '../Recommended/Recommended'
 
 import './Movie.scss'
 
@@ -21,7 +22,8 @@ class Movie extends Component {
             CAST: [],
             genres: [],
             trailer: [],
-            loading: true
+            loading: true,
+            oldLocation: ''
         }
         this.openModal = this.openModal.bind(this)
     }
@@ -45,13 +47,50 @@ class Movie extends Component {
 
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.location.pathname !== undefined && prevProps.match.params.name !== this.props.match.params.name) {
+           this.setState({ oldLocation: prevProps.location.pathname}) 
+        } else return
+       if (prevProps.match.params.name !== this.props.match.params.name) {
+           this.setState({ 
+               loading: true,
+               MOVIE: [] 
+            })
+           this.fetchMovies()
+       } else return
+  }
+
+    fetchMovies = async() => {
+        id = this.props.match.params.name
+        const MOVIE_RESULTS = await fetch(`${BASIC_MOVIE_URL}${id}${BASIC_MOVIE_END_URL}`);
+        const DATA = await MOVIE_RESULTS.json();
+        this.setState({ 
+            MOVIE: DATA,
+            genres: DATA.genres
+         });
+
+        const CAST_RESULTS = await fetch(`${BASIC_MOVIE_URL}${id}${BASIC_MOVIE_CAST_END_URL}`);
+        const CAST_DATA = await CAST_RESULTS.json();
+        this.setState({ CAST: CAST_DATA.cast })
+
+        const TRAILER_RESULT = await fetch(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=e8146f65b965e0a1cb0600c774f8a2a6`)
+        const TRAILER_DATA = await TRAILER_RESULT.json();
+        this.setState({ trailer: TRAILER_DATA.results })
+
+    }
+
     openModal () {
         this.setState({isOpen: true})
     }
 
     handleBackBtn = () => {
-        if(this.props.location.state !== undefined) {
+        if (this.props.location.state.history) {
+        this.props.history.push(this.props.location.state.history)
+        }
+        else if(this.props.location.state !== undefined && this.props.location.state.history) {
         this.props.history.push(this.props.location.state.history.pathname + this.props.location.state.history.search);
+        }  else {
+        this.props.history.push(this.state.oldLocation)
         }
     };
 
@@ -73,6 +112,7 @@ class Movie extends Component {
     }
 
         return (
+            <React.Fragment>
             <div className="wrapper">
             <div className="movie__wrapper">
                 
@@ -149,7 +189,7 @@ class Movie extends Component {
                                 <img
                                 alt={CAST.name} 
                                 src={CAST.profile_path
-                                    ? `https://image.tmdb.org/t/p/original${CAST.profile_path}`
+                                    ? `https://image.tmdb.org/t/p/w342${CAST.profile_path}`
                                     : placeholderCast
                                 } />
                             </Link>
@@ -166,7 +206,7 @@ class Movie extends Component {
                             target="_blank"
                             rel="noopener noreferrer"
                             >
-                            <button className="trailer__button" onClick={this.handleBackBtn}>IMDb</button>
+                            <button className="trailer__button">IMDb</button>
                       </a>
                     : ''
                     }
@@ -178,7 +218,7 @@ class Movie extends Component {
                             target="_blank"
                             rel="noopener noreferrer"
                             >
-                            <button className="trailer__button" onClick={this.handleBackBtn}>Website</button>
+                            <button className="trailer__button">Website</button>
                     </a>
                     : ''
                     }
@@ -201,6 +241,8 @@ class Movie extends Component {
                 </div>
             </div>
             </div>
+             <Recommended id={id} />
+             </React.Fragment>
         )
     }
 }

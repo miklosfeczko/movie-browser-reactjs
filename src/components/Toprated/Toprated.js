@@ -124,7 +124,6 @@ class Toprated extends Component {
                         <div className="poster__item">
                                 <Link 
                                 style={{textDecoration: 'none'}}
-                                key={MOVIE.id} 
                                 to={{
                                         pathname: `/Movie/${MOVIE.id}`,
                                         state: {
@@ -135,7 +134,7 @@ class Toprated extends Component {
                                 <img
                                 alt={MOVIE.title}
                                 src={MOVIE.poster_path
-                                   ? `https://image.tmdb.org/t/p/original${MOVIE.poster_path}`   
+                                   ? `https://image.tmdb.org/t/p/w342${MOVIE.poster_path}`   
                                    : placeholderImg                              
                                 } 
                                 />
