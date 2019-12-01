@@ -15,6 +15,7 @@
     overflow-x: scroll;
     color: white;
     border-right: 1px solid rgb(226, 226, 226);
+    scrollbar-width: none;
     p {
         text-transform: uppercase;
         color: $darkteal;
