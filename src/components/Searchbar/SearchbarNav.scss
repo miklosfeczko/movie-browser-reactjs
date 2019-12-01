@@ -6,6 +6,7 @@
 
 ::placeholder {
     color: white;
+    opacity: 1;
 }
 
 form button{
@@ -19,7 +20,7 @@ background-color: $darkteal;
 border: 1px solid transparent;
 display: inline-block;
 justify-content: space-around;
-padding: 0.6rem 3rem;
+padding: 0.6rem 2rem;
 border-radius: 5rem;
 line-height: 1;
 font-weight: 500;
@@ -83,13 +84,16 @@ form button {
     }
 }
 
-@media only screen and (max-width: 360px) {  
+@media only screen and (max-width: 370px) {  
+     form {
+        padding: 0.6rem 1rem;
+    } 
     form input {
         font-size: 0.75rem;
     }
 }
 
-@media only screen and (max-width: 320px) {  
+@media only screen and (max-width: 320px) { 
     form input {
         font-size: 0.64rem;
     }
