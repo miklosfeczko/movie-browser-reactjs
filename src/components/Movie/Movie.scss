@@ -6,6 +6,7 @@
     display: flex;
     width: 100%;
     flex-direction: column;
+    min-width: 320px;
 }
 
 .movie__wrapper {
@@ -198,6 +199,7 @@
         font-size: 1.7rem;
     }
     .link__wrapper {
+	max-height: 4rem;
         img {
             width: 3rem;
             height: 3rem;
@@ -236,7 +238,7 @@
     }
 }
 
-@media only screen and (max-width: 320px) {
+@media only screen and (max-width: 370px) {
     .link__wrapper {
         img {
             margin-right: 0.6rem;
